@@ -42,6 +42,7 @@ class DiscoverRoute extends GoRouteData with $DiscoverRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) {
+    getIt<DiscoverBloc>().add(DiscoverEvent.started());
     return const DiscoverTab();
   }
 }

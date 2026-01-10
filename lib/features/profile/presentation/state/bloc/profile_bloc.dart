@@ -18,7 +18,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         getProfile: (e) async {
           emit(const ProfileState.loading());
           final result = await _profileService.getProfile();
-          result.fold((failure) => emit(ProfileState.failure(failure.message)), (response) {
+          result.fold((failure) => emit(ProfileState.failure(failure)), (response) {
             if (response.data != null) {
               emit(ProfileState.loaded(response.data!));
             } else {

@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
 import 'package:music/core/data/models/api_response.dart';
-import 'package:music/core/domain/exceptions/api_failure.dart';
 import 'package:music/core/domain/services/api_service_handler_mixin.dart';
 import 'package:music/features/profile/data/data_sources/profile_data_source.dart';
 import 'package:music/features/profile/data/models/profile_response_data.dart';
@@ -19,7 +18,7 @@ class ProfileServiceImpl extends ProfileService with ApiServiceHandlerMixin {
   Logger get logger => _logger;
 
   @override
-  Future<Either<ApiFailure, ApiResponse<ProfileDataResponse>>> getProfile() async {
+  Future<Either<String, ApiResponse<ProfileDataResponse>>> getProfile() async {
     return execute(() async {
       return await _dataSource.getProfile();
     });

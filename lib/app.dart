@@ -1,7 +1,8 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:music/__lib.dart';
+import 'package:music/features/dashboard/presentation/states/bloc/categories_bloc.dart';
+import 'package:music/features/dashboard/presentation/states/bloc/discover_bloc.dart';
+import 'package:music/features/dashboard/presentation/states/bloc/your_library_bloc.dart';
 
 Future<void> setUp(AppEnvironment env) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,13 @@ void _setupLogger(AppEnvironment env) {
 Future<void> runMusicApp() async {
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider.value(value: getIt<AppBloc>())],
+      providers: [
+        BlocProvider.value(value: getIt<AppBloc>()),
+        BlocProvider.value(value: getIt<CategoriesBloc>()),
+        BlocProvider.value(value: getIt<DiscoverBloc>()),
+        BlocProvider.value(value: getIt<YourLibraryBloc>()),
+        BlocProvider.value(value: getIt<AppBloc>()),
+      ],
       child: const MusicApp(),
     ),
   );

@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logging/logging.dart';
-import 'package:music/core/data/models/api_response.dart';
-import 'package:music/core/domain/exceptions/api_failure.dart';
 import 'package:music/core/domain/services/api_service_handler_mixin.dart';
 import 'package:music/features/dashboard/data/data_sources/podcast_data_source.dart';
 import 'package:music/features/dashboard/data/models/podcast_models.dart';
@@ -19,190 +17,256 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
   Logger get logger => _logger;
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getRecentPlays({int page = 1, int perPage = 10}) async {
-    return execute(() async {
-      return await _dataSource.getRecentPlays(page: page, perPage: perPage);
+  Future<Either<String, PaginatedEpisodesDto>> getRecentPlays({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getRecentPlays(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getTrendingEpisodes({
-    int page = 1,
-    int perPage = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getTrendingEpisodes(page: page, perPage: perPage);
+  Future<Either<String, List<EpisodeDto>>> getTrendingEpisodes({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getTrendingEpisodes(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data.data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<EpisodeDto>>> getEditorPick() async {
-    return execute(() async {
-      return await _dataSource.getEditorPick();
+  Future<Either<String, EpisodeDto?>> getEditorPick() async {
+    final result = await execute(() async {
+      final response = await _dataSource.getEditorPick();
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedPodcastsDto>>> getTopJollyPodcasts({
-    int page = 1,
-    int perPage = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getTopJollyPodcasts(page: page, perPage: perPage);
+  Future<Either<String, List<PodcastDto>>> getTopJollyPodcasts({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getTopJollyPodcasts(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data.data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<HandpickedEpisodesDto>>> getHandpickedEpisodes({int amount = 10}) async {
-    return execute(() async {
-      return await _dataSource.getHandpickedEpisodes(amount: amount);
+  Future<Either<String, HandpickedEpisodesDto>> getHandpickedEpisodes({int amount = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getHandpickedEpisodes(amount: amount);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedKeywordsDto>>> getKeywords({int page = 1, int perPage = 20}) async {
-    return execute(() async {
-      return await _dataSource.getKeywords(page: page, perPage: perPage);
+  Future<Either<String, PaginatedKeywordsDto>> getKeywords({int page = 1, int perPage = 20}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getKeywords(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   // New methods implementation
   @override
-  Future<Either<ApiFailure, ApiResponse<List<CategoryGroupDto>>>> getCategories() async {
-    return execute(() async {
-      return await _dataSource.getCategories();
+  Future<Either<String, List<CategoryGroupDto>>> getCategories() async {
+    final result = await execute(() async {
+      final response = await _dataSource.getCategories();
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getTrendingEpisodesByCategory({
+  Future<Either<String, PaginatedEpisodesDto>> getTrendingEpisodesByCategory({
     required String categoryType,
     String? subCategoryName,
     int page = 1,
     int perPage = 10,
   }) async {
-    return execute(() async {
-      return await _dataSource.getTrendingEpisodesByCategory(
+    final result = await execute(() async {
+      final response = await _dataSource.getTrendingEpisodesByCategory(
         categoryType: categoryType,
         subCategoryName: subCategoryName,
         page: page,
         perPage: perPage,
       );
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedFavoriteEpisodesDto>>> getFavoriteEpisodes({
-    int page = 1,
-    int perPage = 10,
-  }) async {
+  Future<Either<String, PaginatedFavoriteEpisodesDto>> getFavoriteEpisodes({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getFavoriteEpisodes(page: page, perPage: perPage);
+      return response.data;
+    });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
+  }
+
+  @override
+  Future<Either<String, dynamic>> addToFavorites({required int episodeId}) async {
     return execute(() async {
-      return await _dataSource.getFavoriteEpisodes(page: page, perPage: perPage);
+      final response = await _dataSource.addToFavorites(episodeId: episodeId);
+      return response.data;
     });
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<dynamic>>> addToFavorites({required int episodeId}) async {
+  Future<Either<String, dynamic>> markAsPlayed({required int episodeId}) async {
     return execute(() async {
-      return await _dataSource.addToFavorites(episodeId: episodeId);
+      final response = await _dataSource.markAsPlayed(episodeId: episodeId);
+      return response.data;
     });
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<dynamic>>> markAsPlayed({required int episodeId}) async {
-    return execute(() async {
-      return await _dataSource.markAsPlayed(episodeId: episodeId);
+  Future<Either<String, List<CategoryGroupDto>>> getCategoriesFromCache() async {
+    final result = await execute(() async {
+      final response = await _dataSource.getCategoriesFromCache();
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<List<CategoryGroupDto>>>> getCategoriesFromCache() async {
-    return execute(() async {
-      return await _dataSource.getCategoriesFromCache();
+  Future<Either<String, PaginatedEpisodesDto>> getRecentPlaysFromCache({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getRecentPlaysFromCache(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getRecentPlaysFromCache({
-    int page = 1,
-    int perPage = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getRecentPlaysFromCache(page: page, perPage: perPage);
+  Future<Either<String, List<EpisodeDto>>> getTrendingEpisodesFromCache({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getTrendingEpisodesFromCache(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data.data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getTrendingEpisodesFromCache({
-    int page = 1,
-    int perPage = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getTrendingEpisodesFromCache(page: page, perPage: perPage);
+  Future<Either<String, EpisodeDto?>> getEditorPickFromCache() async {
+    final result = await execute(() async {
+      final response = await _dataSource.getEditorPickFromCache();
+      return response.data;
     });
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<EpisodeDto>>> getEditorPickFromCache() async {
-    return execute(() async {
-      return await _dataSource.getEditorPickFromCache();
+  Future<Either<String, List<PodcastDto>>> getTopJollyPodcastsFromCache({int page = 1, int perPage = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getTopJollyPodcastsFromCache(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data.data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedPodcastsDto>>> getTopJollyPodcastsFromCache({
-    int page = 1,
-    int perPage = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getTopJollyPodcastsFromCache(page: page, perPage: perPage);
+  Future<Either<String, HandpickedEpisodesDto>> getHandpickedEpisodesFromCache({int amount = 10}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getHandpickedEpisodesFromCache(amount: amount);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<HandpickedEpisodesDto>>> getHandpickedEpisodesFromCache({
-    int amount = 10,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getHandpickedEpisodesFromCache(amount: amount);
+  Future<Either<String, PaginatedKeywordsDto>> getKeywordsFromCache({int page = 1, int perPage = 20}) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getKeywordsFromCache(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedKeywordsDto>>> getKeywordsFromCache({
-    int page = 1,
-    int perPage = 20,
-  }) async {
-    return execute(() async {
-      return await _dataSource.getKeywordsFromCache(page: page, perPage: perPage);
-    });
-  }
-
-  @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedEpisodesDto>>> getTrendingEpisodesByCategoryFromCache({
+  Future<Either<String, PaginatedEpisodesDto>> getTrendingEpisodesByCategoryFromCache({
     required String categoryType,
     String? subCategoryName,
     int page = 1,
     int perPage = 10,
   }) async {
-    return execute(() async {
-      return await _dataSource.getTrendingEpisodesByCategoryFromCache(
+    final result = await execute(() async {
+      final response = await _dataSource.getTrendingEpisodesByCategoryFromCache(
         categoryType: categoryType,
         subCategoryName: subCategoryName,
         page: page,
         perPage: perPage,
       );
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override
-  Future<Either<ApiFailure, ApiResponse<PaginatedFavoriteEpisodesDto>>> getFavoriteEpisodesFromCache({
+  Future<Either<String, PaginatedFavoriteEpisodesDto>> getFavoriteEpisodesFromCache({
     int page = 1,
     int perPage = 10,
   }) async {
-    return execute(() async {
-      return await _dataSource.getFavoriteEpisodesFromCache(page: page, perPage: perPage);
+    final result = await execute(() async {
+      final response = await _dataSource.getFavoriteEpisodesFromCache(page: page, perPage: perPage);
+      return response.data;
     });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
+    );
   }
 
   @override

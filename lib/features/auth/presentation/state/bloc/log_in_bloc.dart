@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:music/__lib.dart';
 import 'package:music/features/auth/domain/services/auth_service.dart';
 import 'package:music/features/auth/data/models/log_in_dto.dart';
 import 'package:music/features/auth/data/models/log_in_response_data.dart';
@@ -20,11 +21,12 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
           emit(const LogInState.loading());
           final dto = LogInDto(phoneNumber: e.phoneNumber, password: e.password);
           final result = await _authService.login(data: dto);
-          result.fold((failure) => emit(LogInState.failure(failure.message)), (apiResponse) {
+          result.fold((failure) => emit(LogInState.failure(failure)), (apiResponse) {
             if (apiResponse.status && apiResponse.data != null) {
               // Access user data from the nested structure
               final userData = apiResponse.data!;
               if (userData.user != null) {
+                getIt<AppBloc>().add(AppEvent.authenticateUser(userData));
                 emit(LogInState.success(userData.user!));
               } else {
                 emit(const LogInState.failure('User data not available'));
