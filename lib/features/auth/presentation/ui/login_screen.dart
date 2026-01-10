@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music/core/presentation/extensions/color_extension.dart';
 import 'package:music/core/presentation/navigation/router.dart';
 import 'package:music/core/presentation/themes/app_color_palette.dart';
 import 'package:music/core/presentation/widgets/app_text_field.dart';
@@ -86,13 +87,14 @@ class _LoginViewState extends State<LoginView> {
                         fillColor: AppColorPalette.white,
                         textColor: AppColorPalette.black,
                         hintColor: AppColorPalette.grey,
+
                         prefixIcon: IntrinsicWidth(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Text('🇳🇬', style: TextStyle(fontSize: 24)),
                               const SizedBox(width: 8),
-                              Container(width: 1, height: 24, color: AppColorPalette.grey.withOpacity(0.5)),
+                              Container(width: 1, height: 24, color: AppColorPalette.grey.addOpacity(50)),
                             ],
                           ),
                         ),
