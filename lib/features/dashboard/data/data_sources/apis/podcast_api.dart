@@ -33,6 +33,13 @@ abstract class PodcastApi {
     @Query('per_page') int perPage = 10,
   });
 
+  @GET('/api/podcasts/{podcastId}/episodes')
+  Future<ApiResponse<ApiResponse<PaginatedEpisodesDto>>> getPodcastEpisodes({
+    @Path('podcastId') required int podcastId,
+    @Query('page') int page = 1,
+    @Query('per_page') int perPage = 10,
+  });
+
   @GET('/api/podcasts/handpicked')
   Future<ApiResponse<HandpickedEpisodesDto>> getHandpickedEpisodes({@Query('amount') int amount = 10});
 

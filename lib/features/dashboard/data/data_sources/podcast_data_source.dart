@@ -91,6 +91,30 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     });
   }
 
+  Future<ApiResponse<PaginatedEpisodesDto>> getPodcastEpisodes({
+    required int podcastId,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    final endpoint = '/api/podcasts/$podcastId/episodes';
+    final params = {'page': page, 'per_page': perPage};
+
+    // If not in cache, fetch from API
+    return handleApiCall(() async {
+      final response = await _api.getPodcastEpisodes(podcastId: podcastId, page: page, perPage: perPage);
+
+      // Save to cache
+      await _cacheManager.saveToCache<ApiResponse<PaginatedEpisodesDto>>(
+        endpoint,
+        params,
+        response.data,
+        (data) => data.toJson((obj) => obj.toJson()),
+      );
+
+      return response.data!;
+    });
+  }
+
   Future<ApiResponse<HandpickedEpisodesDto>> getHandpickedEpisodes({int amount = 10}) async {
     const endpoint = '/api/podcasts/handpicked';
     final params = {'amount': amount};
@@ -395,6 +419,27 @@ class PodcastDataSource with ApiErrorHandlerMixin {
 
     if (cached != null) {
       return cached as ApiResponse<PaginatedKeywordsDto?>;
+    } else {
+      return const ApiResponse(data: null);
+    }
+  }
+
+  Future<ApiResponse<PaginatedEpisodesDto?>> getPodcastEpisodesFromCache({
+    required int podcastId,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    final endpoint = '/api/podcasts/$podcastId/episodes';
+    final params = {'page': page, 'per_page': perPage};
+
+    final cached = await _cacheManager.getFromCache<ApiResponse<PaginatedEpisodesDto>>(
+      endpoint,
+      params,
+      (json) => ApiResponse.fromJson(json, (data) => PaginatedEpisodesDto.fromJson(data as Map<String, dynamic>)),
+    );
+
+    if (cached != null) {
+      return cached as ApiResponse<PaginatedEpisodesDto?>;
     } else {
       return const ApiResponse(data: null);
     }

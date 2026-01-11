@@ -65,6 +65,22 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
   }
 
   @override
+  Future<Either<String, List<EpisodeDto>>> getPodcastEpisodes({
+    required int podcastId,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getPodcastEpisodes(podcastId: podcastId, page: page, perPage: perPage);
+      return response.data?.data;
+    });
+    return result.fold(
+      (error) => Left(error),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
+    );
+  }
+
+  @override
   Future<Either<String, HandpickedEpisodesDto>> getHandpickedEpisodes({int amount = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getHandpickedEpisodes(amount: amount);
@@ -229,6 +245,23 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
         perPage: perPage,
       );
       return response.data;
+    });
+    return result.fold((error) => Left(error), (data) => Right(data));
+  }
+
+  @override
+  Future<Either<String, List<EpisodeDto>?>> getPodcastEpisodesFromCache({
+    required int podcastId,
+    int page = 1,
+    int perPage = 10,
+  }) async {
+    final result = await execute(() async {
+      final response = await _dataSource.getPodcastEpisodesFromCache(
+        podcastId: podcastId,
+        page: page,
+        perPage: perPage,
+      );
+      return response.data?.data;
     });
     return result.fold((error) => Left(error), (data) => Right(data));
   }

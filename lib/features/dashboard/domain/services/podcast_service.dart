@@ -11,6 +11,8 @@ abstract class PodcastService implements ApiServiceHandler {
 
   Future<Either<String, List<PodcastDto>>> getTopJollyPodcasts({int page = 1, int perPage = 10});
 
+  Future<Either<String, List<EpisodeDto>>> getPodcastEpisodes({required int podcastId, int page = 1, int perPage = 10});
+
   Future<Either<String, HandpickedEpisodesDto>> getHandpickedEpisodes({int amount = 10});
 
   Future<Either<String, PaginatedKeywordsDto>> getKeywords({int page = 1, int perPage = 20});
@@ -38,6 +40,11 @@ abstract class PodcastService implements ApiServiceHandler {
   Future<Either<String, PaginatedEpisodesDto?>> getTrendingEpisodesByCategoryFromCache({
     required String categoryType,
     String? subCategoryName,
+    int page = 1,
+    int perPage = 10,
+  });
+  Future<Either<String, List<EpisodeDto>?>> getPodcastEpisodesFromCache({
+    required int podcastId,
     int page = 1,
     int perPage = 10,
   });
