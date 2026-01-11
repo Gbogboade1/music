@@ -11,6 +11,8 @@ class MusicPlayerScreen extends StatefulWidget {
 }
 
 class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
+  double _dragOffset = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PlayerBloc, PlayerState>(
@@ -23,32 +25,48 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
         final isPlaying = model.isPlaying;
 
         return Scaffold(
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColorPalette.primary, // Green top
-                  AppColorPalette.background, // Dark bottom
-                ],
-              ),
-            ),
-            child: Column(
-              children: [
-                const SizedBox(height: 16),
-                // Header
-                IconButton(
-                  icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 32),
-                  onPressed: () => Navigator.of(context).pop(),
+          body: GestureDetector(
+            onVerticalDragUpdate: (details) {
+              setState(() {
+                _dragOffset += details.delta.dy;
+                if (_dragOffset < 0) _dragOffset = 0; // Only allow downward drag
+              });
+            },
+            onVerticalDragEnd: (details) {
+              if (_dragOffset > 100) {
+                Navigator.of(context).pop();
+              } else {
+                setState(() {
+                  _dragOffset = 0;
+                });
+              }
+            },
+            child: Transform.translate(
+              offset: Offset(0, _dragOffset),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColorPalette.primary, // Green top
+                      AppColorPalette.background, // Dark bottom
+                    ],
+                  ),
                 ),
-                Expanded(
-                  child: ListView(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                          child: Column(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 16),
+                    // Header
+                    IconButton(
+                      icon: const Icon(Icons.keyboard_arrow_down, color: Colors.white, size: 32),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                    Expanded(
+                      child: ListView(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        children: [
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // Cover Art
@@ -185,12 +203,12 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                               const SizedBox(height: 20),
                             ],
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         );

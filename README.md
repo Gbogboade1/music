@@ -1,16 +1,34 @@
 # music
+Jolly Podcast
 
-A new Flutter project.
+Submission for test
 
-## Getting Started
+Figma Design:
+https://www.figma.com/design/JvuptFe2YT64HJ1YjQJsnF/Jolly-Podcast-test?node-id=0-1&p=f
 
-This project is a starting point for a Flutter application.
+Swagger URL:
+http://13.49.46.240:9000/#/Consumer/
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Submission APK:
+https://drive.google.com/drive/folders/18vVe8vPrlpX9z2nSsEOqN5W_-0jJaOH4?usp=sharing
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Steps to run:
+1. Ensure you have the Flutter SDK installed on your machine.
+2. Clone this repository to your local machine:
+    ```bash
+    git clone https://github.com/Gbogboade1/music.git
+    cd music
+    ```
+3. Install the dependencies:
+    ```bash
+    flutter pub get
+    ```
+4. Run code generation:
+    ```bash
+    dart run build_runner build --delete-conflicting-outputs
+    ```
+5. Run the application:
+    ```bash
+    flutter run
+    ```
