@@ -10,6 +10,7 @@ import 'package:music/core/presentation/themes/app_color_palette.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../data/models/podcast_models.dart';
 import '../states/bloc/player_bloc.dart';
+import 'music_player_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({required this.navigationShell, super.key});
@@ -36,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
               return _MiniPlayer(
                 episode: model.currentEpisode!,
                 isPlaying: model.isPlaying,
-                onTap: () => const MusicPlayerRoute().push(context),
+                onTap: () => showDialog(context: context, builder: (context) => MusicPlayerScreen()),
                 onPlayPause: () {
                   if (model.isPlaying) {
                     context.read<PlayerBloc>().add(const PlayerEvent.pause());

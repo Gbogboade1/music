@@ -3,7 +3,7 @@ import '../../../../../core/presentation/themes/app_color_palette.dart';
 
 import '../../../../../__lib.dart';
 import '../../../data/models/podcast_models.dart';
-import '../../music_player_screen.dart';
+import '../music_player_screen.dart';
 import '../../states/bloc/player_bloc.dart';
 import '../../states/entities/player_model.dart';
 
@@ -48,38 +48,59 @@ class TrendingCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Spacer(),
-                    GestureDetector(
-                      onTap: () {
-                        getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
-                        showDialog(context: context, builder: (context) => MusicPlayerScreen());
-                      },
-                      child: (episode.podcast?.coverPictureUrl != null && episode.podcast!.coverPictureUrl!.isNotEmpty)
-                          ? Container(
-                              height: 70,
-                              width: 70,
-                              margin: const EdgeInsets.only(bottom: 8),
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: CachedNetworkImage(
-                                      imageUrl: episode.podcast!.coverPictureUrl!,
-                                      fit: BoxFit.cover,
-                                      height: 70,
-                                      width: 70,
-                                    ),
+                    BlocBuilder<PlayerBloc, PlayerState>(
+                      builder: (context, state) {
+                        final isPlaying = state.model.currentEpisode?.id == episode.id && state.model.isPlaying;
+                        return GestureDetector(
+                          onTap: () {
+                            if (isPlaying) {
+                              getIt<PlayerBloc>().add(PlayerEvent.pause());
+                            } else {
+                              getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
+                              showDialog(context: context, builder: (context) => MusicPlayerScreen());
+                            }
+                          },
+                          child:
+                              (episode.podcast?.coverPictureUrl != null && episode.podcast!.coverPictureUrl!.isNotEmpty)
+                              ? Container(
+                                  height: 70,
+                                  width: 70,
+                                  margin: const EdgeInsets.only(bottom: 8),
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: CachedNetworkImage(
+                                          imageUrl: episode.podcast!.coverPictureUrl!,
+                                          fit: BoxFit.cover,
+                                          height: 70,
+                                          width: 70,
+                                        ),
+                                      ),
+                                      Center(
+                                        child: isPlaying
+                                            ? Icon(Icons.pause, size: 24)
+                                            : SvgPicture.asset(Assets.svg.playSolid.path, width: 24),
+                                      ),
+                                    ],
                                   ),
-                                  Center(child: SvgPicture.asset(Assets.svg.playSolid.path, width: 24)),
-                                ],
-                              ),
-                            )
-                          : Container(
-                              // Fallback if no cover URL
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(8)),
-                              child: Center(child: SvgPicture.asset(Assets.svg.playSolid.path, width: 24)),
-                            ),
+                                )
+                              : Container(
+                                  // Fallback if no cover URL
+                                  height: 70,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white10,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: isPlaying
+                                        ? Icon(Icons.pause, size: 24)
+                                        : SvgPicture.asset(Assets.svg.playSolid.path, width: 24),
+                                  ),
+                                ),
+                        );
+                      },
                     ),
 
                     Text(

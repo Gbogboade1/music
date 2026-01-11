@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
-import 'package:music/features/dashboard/domain/services/audio_player_service.dart';
+import '../../../domain/services/audio_player_service.dart';
+import '../../../../../__lib.dart';
 import '../entities/player_model.dart';
 
 part 'player_event.dart';
@@ -147,6 +146,10 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   Future<void> _onReset(_Reset event, Emitter<PlayerState> emit) async {
     await _audioPlayerService.stop();
     final resetModel = event.data.copyWith(isPlaying: false);
+    if (resetModel.currentEpisode != null && resetModel.currentEpisode?.id == state.model.currentEpisode?.id) {
+      emit(PlayerState.playing(state.model.copyWith()));
+      return;
+    }
     emit(PlayerState.initial(model: resetModel));
     if (resetModel.currentEpisode != null) {
       add(PlayerEvent.playCurrent());

@@ -6,5 +6,4 @@ sealed class AppEvent with _$AppEvent {
   const factory AppEvent.authenticateUser(AuthDataResponse authData) = _AuthenticateUserEvent;
   const factory AppEvent.updateUser(UserDto? user) = _UpdateUserEvent;
   const factory AppEvent.deleteUser(UserDto? user) = _DeleteUserEvent;
-
 }

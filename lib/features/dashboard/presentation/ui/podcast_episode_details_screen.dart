@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:music/gen/assets.gen.dart';
-import '../../../core/presentation/themes/app_color_palette.dart';
-import 'ui/widgets/app_back_button.dart';
-import 'ui/widgets/app_header.dart';
+import '../../../../__lib.dart';
+import '../../../../core/presentation/themes/app_color_palette.dart';
+import '../states/bloc/player_bloc.dart';
+import '../states/entities/player_model.dart';
+import 'music_player_screen.dart';
+import 'widgets/app_back_button.dart';
+import 'widgets/app_header.dart';
 
-import '../data/models/podcast_models.dart';
+import '../../data/models/podcast_models.dart';
 
 class PodcastEpisodeDetailsScreen extends StatefulWidget {
   const PodcastEpisodeDetailsScreen({super.key, required this.episode, required this.episodeId});
@@ -66,23 +67,40 @@ class _PodcastEpisodeDetailsScreenState extends State<PodcastEpisodeDetailsScree
                   // Action Buttons Row 1
                   Row(
                     children: [
-                      // Play Button
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColorPalette.primary,
-                            foregroundColor: Colors.white,
-                            shape: const StadiumBorder(),
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          icon: SvgPicture.asset(
-                            Assets.svg.playSolid.path,
-                            width: 20,
-                            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                          ),
-                          label: const Text('Play', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                        ),
+                      // Play/Pause Button
+                      BlocBuilder<PlayerBloc, PlayerState>(
+                        builder: (context, state) {
+                          final isPlaying = state.model.currentEpisode?.id == episode.id && state.model.isPlaying;
+                          return Expanded(
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                if (isPlaying) {
+                                  getIt<PlayerBloc>().add(PlayerEvent.pause());
+                                } else {
+                                  getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
+                                  showDialog(context: context, builder: (context) => MusicPlayerScreen());
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColorPalette.primary,
+                                foregroundColor: Colors.white,
+                                shape: const StadiumBorder(),
+                                padding: const EdgeInsets.symmetric(vertical: 12),
+                              ),
+                              icon: isPlaying
+                                  ? const Icon(Icons.pause, color: Colors.white)
+                                  : SvgPicture.asset(
+                                      Assets.svg.playSolid.path,
+                                      width: 20,
+                                      colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                                    ),
+                              label: Text(
+                                isPlaying ? 'Pause' : 'Play',
+                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                       const SizedBox(width: 12),
 

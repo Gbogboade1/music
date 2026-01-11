@@ -1,6 +1,5 @@
 import 'package:music/core/data/failure.dart';
 
-
 sealed class ErrorContext implements Failure<ErrorContext> {
   const ErrorContext({required this.message, this.error, this.stackTrace});
 

@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:music/core/presentation/themes/app_color_palette.dart';
+import '../states/bloc/player_bloc.dart';
 
 import '../../../../__lib.dart';
-import 'states/bloc/player_bloc.dart';
 
 class MusicPlayerScreen extends StatefulWidget {
   const MusicPlayerScreen({super.key});
@@ -108,8 +109,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                                     },
                                   ),
                                   IconButton(
-                                    icon: Assets.svg.rewind10
-                                        .svg(), // const Icon(Icons.replay_10, color: Colors.white, size: 32),
+                                    icon: const Icon(Icons.replay_10, color: Colors.white, size: 32),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.rewind10());
                                     },
@@ -137,8 +137,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: Assets.svg.forward10
-                                        .svg(), // const Icon(Icons.forward_10, color: Colors.white, size: 32),
+                                    icon: const Icon(Icons.forward_10, color: Colors.white, size: 32),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.skip10());
                                     },

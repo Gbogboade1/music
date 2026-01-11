@@ -5,7 +5,5 @@ part 'app_model.freezed.dart';
 
 @freezed
 sealed class AppModel with _$AppModel {
-  const factory AppModel({
-    UserDto? user,
-  }) = _AppModel;
+  const factory AppModel({UserDto? user}) = _AppModel;
 }

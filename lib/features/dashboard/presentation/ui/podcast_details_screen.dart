@@ -9,11 +9,11 @@ import 'package:music/features/dashboard/presentation/ui/widgets/app_header.dart
 import 'package:music/gen/assets.gen.dart';
 import 'package:music/injectable.dart';
 
-import '../../../__lib.dart';
-import '../data/models/podcast_models.dart';
-import 'states/bloc/player_bloc.dart';
-import 'states/entities/player_model.dart';
-import 'ui/music_player_screen.dart';
+import '../../../../__lib.dart';
+import '../../data/models/podcast_models.dart';
+import '../states/bloc/player_bloc.dart';
+import '../states/entities/player_model.dart';
+import 'music_player_screen.dart';
 
 class PodcastDetailsScreen extends StatefulWidget {
   const PodcastDetailsScreen({super.key, required this.podcast, required this.podcastId});

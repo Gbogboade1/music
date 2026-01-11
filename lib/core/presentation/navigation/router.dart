@@ -9,14 +9,14 @@ import 'package:music/features/auth/presentation/ui/set_up_completed_screen.dart
 import 'package:music/features/auth/presentation/ui/signup_screen.dart';
 import 'package:music/features/auth/presentation/ui/splash_screen.dart';
 import 'package:music/features/auth/presentation/ui/verify_code_screen.dart';
-import 'package:music/features/dashboard/presentation/music_player_screen.dart';
-import 'package:music/features/dashboard/presentation/podcast_episode_details_screen.dart';
+import 'package:music/features/dashboard/presentation/ui/music_player_screen.dart';
+import 'package:music/features/dashboard/presentation/ui/podcast_episode_details_screen.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/discover_bloc.dart';
 import 'package:music/features/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:music/features/dashboard/presentation/ui/tabs/discover_tab.dart';
 import 'package:music/features/dashboard/presentation/ui/tabs/categories_tab.dart';
 import 'package:music/features/dashboard/presentation/ui/tabs/library_tab.dart';
-import 'package:music/features/dashboard/presentation/podcast_details_screen.dart';
+import 'package:music/features/dashboard/presentation/ui/podcast_details_screen.dart';
 import 'package:music/features/profile/presentation/ui/account_settings_screen.dart';
 import 'package:music/features/profile/presentation/ui/become_podcaster_screen.dart';
 import 'package:music/features/profile/presentation/ui/notifications_screen.dart';

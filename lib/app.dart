@@ -5,6 +5,9 @@ import 'package:music/features/dashboard/presentation/states/bloc/discover_bloc.
 import 'package:music/features/dashboard/presentation/states/bloc/player_bloc.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/your_library_bloc.dart';
 
+import 'core/presentation/widgets/connectivity_banner.dart';
+
+final AppBannerController appBannerController = AppBannerController();
 Future<void> setUp(AppEnvironment env) async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies(env);
@@ -44,6 +47,26 @@ class MusicApp extends StatelessWidget {
       themeMode: ThemeController().themeMode,
       routerConfig: AppRouter.goRouter,
       theme: ThemeController().lightTheme,
+      builder: (context, child) => Overlay(
+        initialEntries: [
+          OverlayEntry(
+            builder: (context) {
+              return Builder(
+                builder: (context) {
+                  final mediaQueryData = MediaQuery.of(context);
+                  final scale = mediaQueryData.textScaler.clamp(minScaleFactor: 0.8, maxScaleFactor: 1.0);
+                  return MediaQuery(
+                    data: MediaQuery.of(context).copyWith(textScaler: scale),
+                    child: ConnectivityBanner(
+                      child: AppBannerView(controller: appBannerController, child: child!),
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

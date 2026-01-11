@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:music/features/dashboard/presentation/music_player_screen.dart';
+import 'package:music/features/dashboard/presentation/ui/music_player_screen.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/player_bloc.dart';
 import 'package:music/features/dashboard/presentation/states/entities/player_model.dart';
 
