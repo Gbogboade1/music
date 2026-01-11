@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
-class MusicPlayerScreen extends StatefulWidget {
-  const MusicPlayerScreen({super.key});
+import '../data/models/podcast_models.dart';
+
+class PodcastDetailsScreen extends StatefulWidget {
+  const PodcastDetailsScreen({super.key, required this.podcast});
+  final PodcastDto podcast;
 
   @override
-  State<MusicPlayerScreen> createState() => _MusicPlayerScreenState();
+  State<PodcastDetailsScreen> createState() => _PodcastDetailsScreenState();
 }
 
-class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
+class _PodcastDetailsScreenState extends State<PodcastDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold();

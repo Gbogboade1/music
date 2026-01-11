@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../__lib.dart';
@@ -21,14 +22,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({TokenLocalStorage? localStorageService})
     : _localStorageService = localStorageService ?? getIt(),
       super(const AppState.initial()) {
-    on<AppEvent>((event, emit) async {
-      await switch (event) {
-        _LogOutEvent() => _logOut(emit),
-        _AuthenticateUserEvent(:final authData) => _authenticateUser(authData, emit),
-        _DeleteUserEvent(:final user) => _deleteUser(user, emit),
-        _UpdateUserEvent(:final user) => _updateUser(user, emit),
-      };
-    });
+    on<_LogOutEvent>((event, emit) => _logOut(emit), transformer: droppable());
+
+    on<_AuthenticateUserEvent>((event, emit) => _authenticateUser(event.authData, emit));
+    on<_DeleteUserEvent>((event, emit) => _deleteUser(event.user, emit));
+    on<_UpdateUserEvent>((event, emit) => _updateUser(event.user, emit));
   }
 
   final StreamController<UserDto?> _userController = StreamController<UserDto?>();
@@ -53,6 +51,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   Future<void> _logOut(Emitter<AppState> emit) async {
     _localStorageService.deleteToken();
-    emit(AppUserStateChanged(AppModel()));
+    emit(AppState.loggedOut(AppModel()));
+    LoginRoute().go(AppRouter.buildContext);
   }
 }

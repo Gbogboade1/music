@@ -530,13 +530,14 @@ extension AppStatePatterns on AppState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AppInitial value)?  initial,TResult Function( AppStateErrorOccurred value)?  errorOccurred,TResult Function( AppUserStateChanged value)?  userStateChanged,TResult Function( AppUserDeleted value)?  userDeleted,TResult Function( AppUserLoading value)?  loading,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AppInitial value)?  initial,TResult Function( AppStateErrorOccurred value)?  errorOccurred,TResult Function( AppUserStateChanged value)?  userStateChanged,TResult Function( AppUserLoggedOut value)?  loggedOut,TResult Function( AppUserDeleted value)?  userDeleted,TResult Function( AppUserLoading value)?  loading,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case AppInitial() when initial != null:
 return initial(_that);case AppStateErrorOccurred() when errorOccurred != null:
 return errorOccurred(_that);case AppUserStateChanged() when userStateChanged != null:
-return userStateChanged(_that);case AppUserDeleted() when userDeleted != null:
+return userStateChanged(_that);case AppUserLoggedOut() when loggedOut != null:
+return loggedOut(_that);case AppUserDeleted() when userDeleted != null:
 return userDeleted(_that);case AppUserLoading() when loading != null:
 return loading(_that);case _:
   return orElse();
@@ -556,13 +557,14 @@ return loading(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AppInitial value)  initial,required TResult Function( AppStateErrorOccurred value)  errorOccurred,required TResult Function( AppUserStateChanged value)  userStateChanged,required TResult Function( AppUserDeleted value)  userDeleted,required TResult Function( AppUserLoading value)  loading,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AppInitial value)  initial,required TResult Function( AppStateErrorOccurred value)  errorOccurred,required TResult Function( AppUserStateChanged value)  userStateChanged,required TResult Function( AppUserLoggedOut value)  loggedOut,required TResult Function( AppUserDeleted value)  userDeleted,required TResult Function( AppUserLoading value)  loading,}){
 final _that = this;
 switch (_that) {
 case AppInitial():
 return initial(_that);case AppStateErrorOccurred():
 return errorOccurred(_that);case AppUserStateChanged():
-return userStateChanged(_that);case AppUserDeleted():
+return userStateChanged(_that);case AppUserLoggedOut():
+return loggedOut(_that);case AppUserDeleted():
 return userDeleted(_that);case AppUserLoading():
 return loading(_that);}
 }
@@ -578,13 +580,14 @@ return loading(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AppInitial value)?  initial,TResult? Function( AppStateErrorOccurred value)?  errorOccurred,TResult? Function( AppUserStateChanged value)?  userStateChanged,TResult? Function( AppUserDeleted value)?  userDeleted,TResult? Function( AppUserLoading value)?  loading,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AppInitial value)?  initial,TResult? Function( AppStateErrorOccurred value)?  errorOccurred,TResult? Function( AppUserStateChanged value)?  userStateChanged,TResult? Function( AppUserLoggedOut value)?  loggedOut,TResult? Function( AppUserDeleted value)?  userDeleted,TResult? Function( AppUserLoading value)?  loading,}){
 final _that = this;
 switch (_that) {
 case AppInitial() when initial != null:
 return initial(_that);case AppStateErrorOccurred() when errorOccurred != null:
 return errorOccurred(_that);case AppUserStateChanged() when userStateChanged != null:
-return userStateChanged(_that);case AppUserDeleted() when userDeleted != null:
+return userStateChanged(_that);case AppUserLoggedOut() when loggedOut != null:
+return loggedOut(_that);case AppUserDeleted() when userDeleted != null:
 return userDeleted(_that);case AppUserLoading() when loading != null:
 return loading(_that);case _:
   return null;
@@ -603,12 +606,13 @@ return loading(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( AppModel model)?  initial,TResult Function( AppModel model,  String error)?  errorOccurred,TResult Function( AppModel model)?  userStateChanged,TResult Function( AppModel model)?  userDeleted,TResult Function( AppModel model)?  loading,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( AppModel model)?  initial,TResult Function( AppModel model,  String error)?  errorOccurred,TResult Function( AppModel model)?  userStateChanged,TResult Function( AppModel model)?  loggedOut,TResult Function( AppModel model)?  userDeleted,TResult Function( AppModel model)?  loading,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case AppInitial() when initial != null:
 return initial(_that.model);case AppStateErrorOccurred() when errorOccurred != null:
 return errorOccurred(_that.model,_that.error);case AppUserStateChanged() when userStateChanged != null:
-return userStateChanged(_that.model);case AppUserDeleted() when userDeleted != null:
+return userStateChanged(_that.model);case AppUserLoggedOut() when loggedOut != null:
+return loggedOut(_that.model);case AppUserDeleted() when userDeleted != null:
 return userDeleted(_that.model);case AppUserLoading() when loading != null:
 return loading(_that.model);case _:
   return orElse();
@@ -628,12 +632,13 @@ return loading(_that.model);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( AppModel model)  initial,required TResult Function( AppModel model,  String error)  errorOccurred,required TResult Function( AppModel model)  userStateChanged,required TResult Function( AppModel model)  userDeleted,required TResult Function( AppModel model)  loading,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( AppModel model)  initial,required TResult Function( AppModel model,  String error)  errorOccurred,required TResult Function( AppModel model)  userStateChanged,required TResult Function( AppModel model)  loggedOut,required TResult Function( AppModel model)  userDeleted,required TResult Function( AppModel model)  loading,}) {final _that = this;
 switch (_that) {
 case AppInitial():
 return initial(_that.model);case AppStateErrorOccurred():
 return errorOccurred(_that.model,_that.error);case AppUserStateChanged():
-return userStateChanged(_that.model);case AppUserDeleted():
+return userStateChanged(_that.model);case AppUserLoggedOut():
+return loggedOut(_that.model);case AppUserDeleted():
 return userDeleted(_that.model);case AppUserLoading():
 return loading(_that.model);}
 }
@@ -649,12 +654,13 @@ return loading(_that.model);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( AppModel model)?  initial,TResult? Function( AppModel model,  String error)?  errorOccurred,TResult? Function( AppModel model)?  userStateChanged,TResult? Function( AppModel model)?  userDeleted,TResult? Function( AppModel model)?  loading,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( AppModel model)?  initial,TResult? Function( AppModel model,  String error)?  errorOccurred,TResult? Function( AppModel model)?  userStateChanged,TResult? Function( AppModel model)?  loggedOut,TResult? Function( AppModel model)?  userDeleted,TResult? Function( AppModel model)?  loading,}) {final _that = this;
 switch (_that) {
 case AppInitial() when initial != null:
 return initial(_that.model);case AppStateErrorOccurred() when errorOccurred != null:
 return errorOccurred(_that.model,_that.error);case AppUserStateChanged() when userStateChanged != null:
-return userStateChanged(_that.model);case AppUserDeleted() when userDeleted != null:
+return userStateChanged(_that.model);case AppUserLoggedOut() when loggedOut != null:
+return loggedOut(_that.model);case AppUserDeleted() when userDeleted != null:
 return userDeleted(_that.model);case AppUserLoading() when loading != null:
 return loading(_that.model);case _:
   return null;
@@ -874,6 +880,81 @@ class _$AppUserStateChangedCopyWithImpl<$Res>
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? model = null,}) {
   return _then(AppUserStateChanged(
+null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
+as AppModel,
+  ));
+}
+
+/// Create a copy of AppState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$AppModelCopyWith<$Res> get model {
+  
+  return $AppModelCopyWith<$Res>(_self.model, (value) {
+    return _then(_self.copyWith(model: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class AppUserLoggedOut implements AppState {
+  const AppUserLoggedOut(this.model);
+  
+
+@override final  AppModel model;
+
+/// Create a copy of AppState
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$AppUserLoggedOutCopyWith<AppUserLoggedOut> get copyWith => _$AppUserLoggedOutCopyWithImpl<AppUserLoggedOut>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppUserLoggedOut&&(identical(other.model, model) || other.model == model));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,model);
+
+@override
+String toString() {
+  return 'AppState.loggedOut(model: $model)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $AppUserLoggedOutCopyWith<$Res> implements $AppStateCopyWith<$Res> {
+  factory $AppUserLoggedOutCopyWith(AppUserLoggedOut value, $Res Function(AppUserLoggedOut) _then) = _$AppUserLoggedOutCopyWithImpl;
+@override @useResult
+$Res call({
+ AppModel model
+});
+
+
+@override $AppModelCopyWith<$Res> get model;
+
+}
+/// @nodoc
+class _$AppUserLoggedOutCopyWithImpl<$Res>
+    implements $AppUserLoggedOutCopyWith<$Res> {
+  _$AppUserLoggedOutCopyWithImpl(this._self, this._then);
+
+  final AppUserLoggedOut _self;
+  final $Res Function(AppUserLoggedOut) _then;
+
+/// Create a copy of AppState
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? model = null,}) {
+  return _then(AppUserLoggedOut(
 null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
 as AppModel,
   ));

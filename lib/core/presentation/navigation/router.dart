@@ -29,6 +29,7 @@ part 'router.g.dart';
 final rootNavKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
 class AppRouter {
+  static BuildContext get buildContext => goRouter.routerDelegate.navigatorKey.currentContext!;
   static final goRouter = GoRouter(
     navigatorKey: rootNavKey,
     initialLocation: SplashScreenRoute.path,

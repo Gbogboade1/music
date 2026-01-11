@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:injectable/injectable.dart';
-import 'package:music/core/data/local/database_helper.dart';
+import 'database_helper.dart';
 
 @injectable
 class CacheManager {
@@ -9,9 +9,9 @@ class CacheManager {
   CacheManager(this._databaseHelper);
 
   // Default cache durations for different types of content
-  static const Duration _defaultCacheDuration = Duration(minutes: 15);
-  static const Duration _shortCacheDuration = Duration(minutes: 5);
-  static const Duration _longCacheDuration = Duration(hours: 1);
+  static const Duration _defaultCacheDuration = Duration(days: 7);
+  static const Duration _shortCacheDuration = Duration(days: 1);
+  static const Duration _longCacheDuration = Duration(days: 15);
 
   String _generateCacheKey(String endpoint, Map<String, dynamic>? params) {
     if (params == null || params.isEmpty) {

@@ -13,8 +13,8 @@ class TokenLocalStorage {
   final refreshTokenKey = 'refresh_token';
   final tokenExpiryKey = 'token_expiry';
 
-  Future<void> storeToken({required String token, }) async {
-    final expiryDate = DateTime.now().add(const Duration(days: 7));
+  Future<void> storeToken({required String token}) async {
+    final expiryDate = DateTime.now().add(const Duration(minutes: 30));
     await Future.wait([
       _localStorageService.saveString(accessTokenKey, token),
       _localStorageService.saveString(tokenExpiryKey, expiryDate.toIso8601String()),
