@@ -184,20 +184,6 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     const endpoint = '/api/categories';
     final params = <String, dynamic>{};
 
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<List<CategoryGroupDto>>>(
-      endpoint,
-      params,
-      (json) => ApiResponse.fromJson(
-        json,
-        (data) => (data as List).map((item) => CategoryGroupDto.fromJson(item as Map<String, dynamic>)).toList(),
-      ),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
-
     // If not in cache, fetch from API
     return handleApiCall(() async {
       final response = await _api.getCategories();
@@ -206,11 +192,11 @@ class PodcastDataSource with ApiErrorHandlerMixin {
       await _cacheManager.saveToCache<ApiResponse<List<CategoryGroupDto>>>(
         endpoint,
         params,
-        response,
+        response.data,
         (data) => data.toJson((obj) => obj.map((item) => item.toJson()).toList()),
       );
 
-      return response;
+      return response.data!;
     });
   }
 

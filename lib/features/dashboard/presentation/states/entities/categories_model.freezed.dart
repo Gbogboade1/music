@@ -11,36 +11,64 @@ part of 'categories_model.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$CategoriesModel {
 
+ List<CategoryGroupDto> get categories;
+/// Create a copy of CategoriesModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CategoriesModelCopyWith<CategoriesModel> get copyWith => _$CategoriesModelCopyWithImpl<CategoriesModel>(this as CategoriesModel, _$identity);
 
-
-  /// Serializes this CategoriesModel to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoriesModel);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CategoriesModel&&const DeepCollectionEquality().equals(other.categories, categories));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(categories));
 
 @override
 String toString() {
-  return 'CategoriesModel()';
+  return 'CategoriesModel(categories: $categories)';
 }
 
 
 }
 
 /// @nodoc
-class $CategoriesModelCopyWith<$Res>  {
-$CategoriesModelCopyWith(CategoriesModel _, $Res Function(CategoriesModel) __);
+abstract mixin class $CategoriesModelCopyWith<$Res>  {
+  factory $CategoriesModelCopyWith(CategoriesModel value, $Res Function(CategoriesModel) _then) = _$CategoriesModelCopyWithImpl;
+@useResult
+$Res call({
+ List<CategoryGroupDto> categories
+});
+
+
+
+
+}
+/// @nodoc
+class _$CategoriesModelCopyWithImpl<$Res>
+    implements $CategoriesModelCopyWith<$Res> {
+  _$CategoriesModelCopyWithImpl(this._self, this._then);
+
+  final CategoriesModel _self;
+  final $Res Function(CategoriesModel) _then;
+
+/// Create a copy of CategoriesModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? categories = null,}) {
+  return _then(_self.copyWith(
+categories: null == categories ? _self.categories : categories // ignore: cast_nullable_to_non_nullable
+as List<CategoryGroupDto>,
+  ));
+}
+
 }
 
 
@@ -119,10 +147,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function()?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<CategoryGroupDto> categories)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CategoriesModel() when $default != null:
-return $default();case _:
+return $default(_that.categories);case _:
   return orElse();
 
 }
@@ -140,10 +168,10 @@ return $default();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function()  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<CategoryGroupDto> categories)  $default,) {final _that = this;
 switch (_that) {
 case _CategoriesModel():
-return $default();}
+return $default(_that.categories);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -157,10 +185,10 @@ return $default();}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function()?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<CategoryGroupDto> categories)?  $default,) {final _that = this;
 switch (_that) {
 case _CategoriesModel() when $default != null:
-return $default();case _:
+return $default(_that.categories);case _:
   return null;
 
 }
@@ -169,38 +197,75 @@ return $default();case _:
 }
 
 /// @nodoc
-@JsonSerializable()
+
 
 class _CategoriesModel implements CategoriesModel {
-  const _CategoriesModel();
-  factory _CategoriesModel.fromJson(Map<String, dynamic> json) => _$CategoriesModelFromJson(json);
+  const _CategoriesModel({final  List<CategoryGroupDto> categories = const <CategoryGroupDto>[]}): _categories = categories;
+  
 
-
-
-
-@override
-Map<String, dynamic> toJson() {
-  return _$CategoriesModelToJson(this, );
+ final  List<CategoryGroupDto> _categories;
+@override@JsonKey() List<CategoryGroupDto> get categories {
+  if (_categories is EqualUnmodifiableListView) return _categories;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_categories);
 }
+
+
+/// Create a copy of CategoriesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$CategoriesModelCopyWith<_CategoriesModel> get copyWith => __$CategoriesModelCopyWithImpl<_CategoriesModel>(this, _$identity);
+
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoriesModel);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CategoriesModel&&const DeepCollectionEquality().equals(other._categories, _categories));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_categories));
 
 @override
 String toString() {
-  return 'CategoriesModel()';
+  return 'CategoriesModel(categories: $categories)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$CategoriesModelCopyWith<$Res> implements $CategoriesModelCopyWith<$Res> {
+  factory _$CategoriesModelCopyWith(_CategoriesModel value, $Res Function(_CategoriesModel) _then) = __$CategoriesModelCopyWithImpl;
+@override @useResult
+$Res call({
+ List<CategoryGroupDto> categories
+});
 
 
+
+
+}
+/// @nodoc
+class __$CategoriesModelCopyWithImpl<$Res>
+    implements _$CategoriesModelCopyWith<$Res> {
+  __$CategoriesModelCopyWithImpl(this._self, this._then);
+
+  final _CategoriesModel _self;
+  final $Res Function(_CategoriesModel) _then;
+
+/// Create a copy of CategoriesModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? categories = null,}) {
+  return _then(_CategoriesModel(
+categories: null == categories ? _self._categories : categories // ignore: cast_nullable_to_non_nullable
+as List<CategoryGroupDto>,
+  ));
+}
+
+
+}
 
 // dart format on

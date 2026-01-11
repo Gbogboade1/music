@@ -51,7 +51,7 @@ abstract class PodcastApi {
 
   // New endpoints
   @GET('/api/categories')
-  Future<ApiResponse<List<CategoryGroupDto>>> getCategories();
+  Future<ApiResponse<ApiResponse<List<CategoryGroupDto>>>> getCategories();
 
   @GET('/api/categories/types/{categoryType}/trending-episodes')
   Future<ApiResponse<PaginatedEpisodesDto>> getTrendingEpisodesByCategory({
