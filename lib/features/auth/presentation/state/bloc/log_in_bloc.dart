@@ -1,6 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:injectable/injectable.dart';
 import 'package:music/__lib.dart';
 import 'package:music/features/auth/domain/services/auth_service.dart';
 import 'package:music/features/auth/data/models/log_in_dto.dart';

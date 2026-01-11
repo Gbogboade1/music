@@ -3,7 +3,6 @@ import 'package:music/features/dashboard/presentation/ui/music_player_screen.dar
 import 'package:music/features/dashboard/presentation/states/bloc/player_bloc.dart';
 import 'package:music/features/dashboard/presentation/states/entities/player_model.dart';
 
-import '../../../../../core/presentation/themes/app_color_palette.dart';
 import '../../../../../__lib.dart';
 import '../../../data/models/podcast_models.dart';
 
@@ -29,30 +28,43 @@ class EditorPickCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () {
-                getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
-                showDialog(context: context, builder: (context) => MusicPlayerScreen());
-              },
-              child: SizedBox(
-                height: 140,
-                width: 140,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      CachedNetworkImage(
-                        imageUrl: episode.pictureUrl,
-                        fit: BoxFit.cover,
-                        errorWidget: (c, o, s) => Container(color: Colors.grey),
+            BlocBuilder<PlayerBloc, PlayerState>(
+              builder: (context, state) {
+                final isPlaying = state.model.currentEpisode?.id == episode.id && state.model.isPlaying;
+                return GestureDetector(
+                  onTap: () {
+                    if (isPlaying) {
+                      getIt<PlayerBloc>().add(PlayerEvent.pause());
+                    } else {
+                      getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
+                      showDialog(context: context, builder: (context) => MusicPlayerScreen());
+                    }
+                  },
+                  child: SizedBox(
+                    height: 140,
+                    width: 140,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          CachedNetworkImage(
+                            imageUrl: episode.pictureUrl,
+                            fit: BoxFit.cover,
+                            errorWidget: (c, o, s) => Container(color: Colors.grey),
+                          ),
+                          Container(color: Colors.black.addOpacity(100 * 0.2)),
+                          Center(
+                            child: isPlaying
+                                ? Icon(Icons.pause, size: 30)
+                                : SvgPicture.asset(Assets.svg.playSolid.path, width: 30),
+                          ),
+                        ],
                       ),
-                      Container(color: Colors.black.addOpacity(100 * 0.2)),
-                      Center(child: SvgPicture.asset(Assets.svg.playSolid.path, width: 30)),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
             const SizedBox(width: 16),
             Expanded(

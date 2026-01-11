@@ -1,6 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 import '../states/bloc/player_bloc.dart';
 
 import '../../../../__lib.dart';
@@ -103,13 +101,13 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.skip_previous, color: Colors.white, size: 32),
+                                    icon: Assets.svg.rewindMusic.svg(),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.playLast());
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.replay_10, color: Colors.white, size: 32),
+                                    icon: Assets.svg.rewind10.svg(),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.rewind10());
                                     },
@@ -137,13 +135,13 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.forward_10, color: Colors.white, size: 32),
+                                    icon: Assets.svg.forward10.svg(),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.skip10());
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.skip_next, color: Colors.white, size: 32),
+                                    icon: Assets.svg.forwardMusic.svg(),
                                     onPressed: () {
                                       context.read<PlayerBloc>().add(const PlayerEvent.playNext());
                                     },

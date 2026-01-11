@@ -53,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
               image: DecorationImage(
                 image: Assets.png.bg1.provider(),
                 fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(AppColorPalette.black.withOpacity(0.3), BlendMode.darken),
+                colorFilter: ColorFilter.mode(AppColorPalette.black.addOpacity(100 * 0.3), BlendMode.darken),
               ),
             ),
             child: SafeArea(
@@ -134,7 +134,7 @@ class _LoginViewState extends State<LoginView> {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(color: AppColorPalette.white.withOpacity(0.2), width: 1),
+                                side: BorderSide(color: AppColorPalette.white.addOpacity(100 * 0.2), width: 1),
                               ),
                               elevation: 0,
                             ),

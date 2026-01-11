@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
-import 'package:music/core/presentation/themes/theme_context.dart';
+import 'package:music/__lib.dart';
 import 'package:music/core/presentation/widgets/app_text_field.dart';
-import 'package:music/gen/assets.gen.dart';
 import 'package:music/gen/fonts.gen.dart';
 
 class CompleteAccountScreen extends StatefulWidget {
@@ -39,7 +36,7 @@ class _CompleteAccountScreenState extends State<CompleteAccountScreen> {
             fit: BoxFit.cover,
             // Using a green overlay to match the vibrant green look
             colorFilter: ColorFilter.mode(
-              AppColorPalette.primary.withOpacity(0.8),
+              AppColorPalette.primary.addOpacity(100 * 0.8),
               BlendMode.srcATop, // Or BlendMode.overlay depending on the asset
             ),
           ),

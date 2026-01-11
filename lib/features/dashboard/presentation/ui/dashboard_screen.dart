@@ -1,13 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:music/__lib.dart';
-import 'package:music/core/presentation/extensions/color_extension.dart';
 import 'package:music/core/presentation/state/model/nav_item.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 
-import '../../../../gen/assets.gen.dart';
 import '../../data/models/podcast_models.dart';
 import '../states/bloc/player_bloc.dart';
 import 'music_player_screen.dart';

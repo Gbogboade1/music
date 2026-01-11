@@ -11,14 +11,25 @@ class AppHeader extends StatelessWidget {
         children: [
           Image.asset(Assets.png.logoSmall.path, height: 32),
           const Spacer(),
-          CircleAvatar(radius: 18, backgroundImage: AssetImage(Assets.png.avatar1.path)),
-          const SizedBox(width: 16),
-          SvgPicture.asset(
-            Assets.svg.notification.path,
-            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 9, horizontal: 9),
+            decoration: BoxDecoration(color: AppColorPalette.c3E3E3E, borderRadius: BorderRadius.circular(18)),
+            child: Row(
+              children: [
+                CircleAvatar(radius: 18, backgroundImage: AssetImage(Assets.png.avatar1.path)),
+                const SizedBox(width: 16),
+                SvgPicture.asset(
+                  Assets.svg.notification.path,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+                const SizedBox(width: 16),
+                SvgPicture.asset(
+                  Assets.svg.search.path,
+                  colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(width: 16),
-          SvgPicture.asset(Assets.svg.search.path, colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn)),
         ],
       ),
     );

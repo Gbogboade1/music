@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 
 import '../../../../__lib.dart';
 import 'states/bloc/player_bloc.dart';

@@ -1,13 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 import 'package:music/core/services/failure_extension.dart';
 import 'package:music/features/dashboard/domain/services/podcast_service.dart';
 import 'package:music/features/dashboard/presentation/ui/widgets/app_back_button.dart';
 import 'package:music/features/dashboard/presentation/ui/widgets/app_header.dart';
-import 'package:music/gen/assets.gen.dart';
-import 'package:music/injectable.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../__lib.dart';
 import '../../data/models/podcast_models.dart';
@@ -212,7 +208,12 @@ class _PodcastDetailsScreenState extends State<PodcastDetailsScreen> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         builderDelegate: PagedChildBuilderDelegate<EpisodeDto>(
-                          itemBuilder: (context, item, index) => _EpisodeTile(episode: item),
+                          itemBuilder: (context, item, index) => _EpisodeTile(
+                            episode: item,
+                            index: index,
+                            allEpisodes:
+                                _pagingController.pages?.expand((page) => page).toList() ?? const <EpisodeDto>[],
+                          ),
                           firstPageProgressIndicatorBuilder: (_) => const Center(child: CircularProgressIndicator()),
                           newPageProgressIndicatorBuilder: (_) => const Center(child: CircularProgressIndicator()),
                           noItemsFoundIndicatorBuilder: (_) => const Center(
@@ -257,7 +258,7 @@ class _CategoryTag extends StatelessWidget {
     if (text.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(color: Colors.white.addOpacity(100 * 0.1), borderRadius: BorderRadius.circular(16)),
       child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 12)),
     );
   }
@@ -277,7 +278,7 @@ class _CircleIconButton extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.white.withOpacity(0.3)),
+          border: Border.all(color: Colors.white.addOpacity(100 * 0.3)),
         ),
         child: Icon(icon, color: Colors.white, size: 20),
       ),
@@ -287,8 +288,20 @@ class _CircleIconButton extends StatelessWidget {
 
 class _EpisodeTile extends StatelessWidget {
   final EpisodeDto episode;
+  final int index;
+  final List<EpisodeDto> allEpisodes;
 
-  const _EpisodeTile({required this.episode});
+  const _EpisodeTile({required this.episode, required this.index, required this.allEpisodes});
+
+  String _formatPublished(String? s) {
+    if (s == null || s.isEmpty) return 'Unknown';
+    try {
+      final dt = DateTime.parse(s);
+      return DateFormat('d MMMM, yy').format(dt);
+    } catch (_) {
+      return s;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +323,16 @@ class _EpisodeTile extends StatelessWidget {
                   if (isPlaying) {
                     getIt<PlayerBloc>().add(PlayerEvent.pause());
                   } else {
-                    getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
+                    final List<EpisodeDto> rewindList = allEpisodes.take(index).toList();
+                    final List<EpisodeDto> nextList = index + 1 < allEpisodes.length
+                        ? allEpisodes.sublist(index + 1)
+                        : <EpisodeDto>[];
+
+                    getIt<PlayerBloc>().add(
+                      PlayerEvent.reset(
+                        PlayerModel(currentEpisode: episode, nextList: nextList, rewindList: rewindList),
+                      ),
+                    );
                     showDialog(context: context, builder: (context) => MusicPlayerScreen());
                   }
                 },
@@ -331,7 +353,7 @@ class _EpisodeTile extends StatelessWidget {
                       height: 60,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.addOpacity(100 * 0.3),
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
@@ -368,7 +390,7 @@ class _EpisodeTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${episode.publishedAt ?? 'Unknown'} • ${episode.duration} minutes',
+                  '${_formatPublished(episode.publishedAt)} • ${episode.duration} minutes',
                   style: const TextStyle(color: Colors.white54, fontSize: 10),
                 ),
               ],

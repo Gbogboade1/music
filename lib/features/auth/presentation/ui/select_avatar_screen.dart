@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
-import 'package:music/core/presentation/themes/theme_context.dart';
-import 'package:music/gen/assets.gen.dart';
+import 'package:music/__lib.dart';
 import 'package:music/gen/fonts.gen.dart';
 
 class SelectAvatarScreen extends StatefulWidget {
@@ -35,7 +32,7 @@ class _SelectAvatarScreenState extends State<SelectAvatarScreen> {
             image: Assets.png.bg1.provider(), // Using consistent background asset
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
-              AppColorPalette.primary.withOpacity(0.9), // Strong green overlay
+              AppColorPalette.primary.addOpacity(100 * 0.9), // Strong green overlay
               BlendMode.srcATop,
             ),
           ),

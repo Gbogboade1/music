@@ -209,7 +209,7 @@ class _PodcastEpisodeDetailsScreenState extends State<PodcastEpisodeDetailsScree
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: AppColorPalette.inputFill.withOpacity(0.5),
+                      color: AppColorPalette.inputFill.addOpacity(100 * 0.5),
                       borderRadius: BorderRadius.circular(24),
                       border: Border.all(color: Colors.white10),
                     ),
@@ -277,7 +277,7 @@ class _OutlinedActionButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: Colors.white.withOpacity(0.3)),
+          border: Border.all(color: Colors.white.addOpacity(100 * 0.3)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -307,7 +307,7 @@ class _OutlinedActionButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: Colors.white.withOpacity(0.3)),
+            border: Border.all(color: Colors.white.addOpacity(100 * 0.3)),
           ),
           alignment: Alignment.center,
           child: Row(

@@ -1,6 +1,5 @@
 import '../../../../__lib.dart';
 import '../../../../core/services/local_storage/token_local_storage.dart';
-import '../../../../gen/assets.gen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

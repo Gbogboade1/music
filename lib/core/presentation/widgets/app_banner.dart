@@ -3,7 +3,6 @@ import 'dart:collection';
 
 import '../../../__lib.dart';
 import 'package:synchronized/synchronized.dart';
-import '../themes/app_color_palette.dart';
 
 class AppBanner extends StatelessWidget {
   /// [style] determines the type of information being communicated to the user.

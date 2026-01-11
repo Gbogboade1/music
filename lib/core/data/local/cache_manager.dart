@@ -40,7 +40,6 @@ class CacheManager {
       }
     } catch (e) {
       // If cache retrieval fails, return null to fetch from API
-      print('Cache retrieval error: $e');
     }
 
     return null;
@@ -64,7 +63,6 @@ class CacheManager {
       await _databaseHelper.setCache(cacheKey, jsonData, duration);
     } catch (e) {
       // If cache saving fails, log but don't throw to avoid breaking API flow
-      print('Cache saving error: $e');
     }
   }
 

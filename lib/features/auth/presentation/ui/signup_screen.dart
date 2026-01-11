@@ -1,8 +1,6 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
+import 'package:music/__lib.dart';
 import 'package:music/core/presentation/widgets/app_text_field.dart';
-import 'package:music/gen/assets.gen.dart';
 import 'package:music/gen/fonts.gen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -29,7 +27,7 @@ class _SignupScreenState extends State<SignupScreen> {
           image: DecorationImage(
             image: Assets.jpeg.bg.provider(),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(AppColorPalette.black.withOpacity(0.3), BlendMode.darken),
+            colorFilter: ColorFilter.mode(AppColorPalette.black.addOpacity(100 * 0.3), BlendMode.darken),
           ),
         ),
         child: SafeArea(
@@ -66,7 +64,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     children: [
                       const Text('🇳🇬', style: TextStyle(fontSize: 24)),
                       const SizedBox(width: 8),
-                      Container(width: 1, height: 24, color: AppColorPalette.grey.withOpacity(0.5)),
+                      Container(width: 1, height: 24, color: AppColorPalette.grey.addOpacity(100 * 0.5)),
                     ],
                   ),
                 ),
@@ -82,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                        side: BorderSide(color: AppColorPalette.white.withOpacity(0.2), width: 1),
+                        side: BorderSide(color: AppColorPalette.white.addOpacity(100 * 0.2), width: 1),
                       ),
                       elevation: 0,
                     ),

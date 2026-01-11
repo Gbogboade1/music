@@ -1,13 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 import 'package:music/core/services/failure_extension.dart';
 import 'package:music/features/dashboard/domain/services/podcast_service.dart';
 import 'package:music/features/dashboard/presentation/ui/widgets/app_back_button.dart';
 import 'package:music/features/dashboard/presentation/ui/widgets/app_header.dart';
-import 'package:music/gen/assets.gen.dart';
-import 'package:music/injectable.dart';
 
 import '../../../__lib.dart';
 import '../data/models/podcast_models.dart';
@@ -257,7 +252,7 @@ class _CategoryTag extends StatelessWidget {
     if (text.isEmpty) return const SizedBox.shrink();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.1), borderRadius: BorderRadius.circular(16)),
+      decoration: BoxDecoration(color: Colors.white.addOpacity(100 * 0.1), borderRadius: BorderRadius.circular(16)),
       child: Text(text, style: const TextStyle(color: Colors.white, fontSize: 12)),
     );
   }
@@ -277,7 +272,7 @@ class _CircleIconButton extends StatelessWidget {
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: Colors.white.withOpacity(0.3)),
+          border: Border.all(color: Colors.white.addOpacity(100 * 0.3)),
         ),
         child: Icon(icon, color: Colors.white, size: 20),
       ),
@@ -331,7 +326,7 @@ class _EpisodeTile extends StatelessWidget {
                       height: 60,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.addOpacity(100 * 0.3),
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),

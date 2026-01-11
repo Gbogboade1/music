@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../../core/presentation/themes/app_color_palette.dart';
 
 import '../../../../../__lib.dart';
 import '../../../data/models/podcast_models.dart';

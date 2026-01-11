@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:music/__lib.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
 
 import '../../../data/models/podcast_models.dart';
 

@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:music/core/presentation/themes/app_color_palette.dart';
-import 'package:music/core/presentation/themes/theme_context.dart';
-import 'package:music/gen/assets.gen.dart';
+import 'package:music/__lib.dart';
 import 'package:music/gen/fonts.gen.dart';
 
 class SelectPersonalizationScreen extends StatefulWidget {
@@ -54,7 +51,7 @@ class _SelectPersonalizationScreenState extends State<SelectPersonalizationScree
           image: DecorationImage(
             image: Assets.png.bg1.provider(),
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(AppColorPalette.black.withOpacity(0.6), BlendMode.darken),
+            colorFilter: ColorFilter.mode(AppColorPalette.black.addOpacity(100 * 0.6), BlendMode.darken),
           ),
         ),
         child: SafeArea(
