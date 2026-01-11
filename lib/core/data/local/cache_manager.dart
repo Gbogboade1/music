@@ -49,11 +49,14 @@ class CacheManager {
   Future<void> saveToCache<T>(
     String endpoint,
     Map<String, dynamic>? params,
-    T data,
+    T? data,
     Map<String, dynamic> Function(T) toJson, {
     Duration? customDuration,
   }) async {
     try {
+      if (data == null) {
+        return;
+      }
       final cacheKey = _generateCacheKey(endpoint, params);
       final jsonData = json.encode(toJson(data));
       final duration = customDuration ?? _getCacheDurationForEndpoint(endpoint);

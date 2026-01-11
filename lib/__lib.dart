@@ -13,3 +13,5 @@ export 'core/presentation/themes/theme_context.dart';
 export 'injectable.dart';
 export 'package:music/core/presentation/state/bloc/app_bloc.dart';
 export 'package:music/core/datasources/apis/api_utils.dart';
+export 'package:music/core/presentation/extensions/color_extension.dart';
+export 'package:music/gen/assets.gen.dart';

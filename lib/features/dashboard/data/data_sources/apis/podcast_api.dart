@@ -19,16 +19,16 @@ abstract class PodcastApi {
   });
 
   @GET('/api/episodes/trending')
-  Future<ApiResponse<PaginatedEpisodesDto>> getTrendingEpisodes({
+  Future<ApiResponse<ApiResponse<PaginatedEpisodesDto>>> getTrendingEpisodes({
     @Query('page') int page = 1,
     @Query('per_page') int perPage = 10,
   });
 
   @GET('/api/episodes/editor-pick')
-  Future<ApiResponse<EpisodeDto>> getEditorPick();
+  Future<ApiResponse<ApiResponse<EpisodeDto>>> getEditorPick();
 
   @GET('/api/podcasts/top-jolly')
-  Future<ApiResponse<PaginatedPodcastsDto>> getTopJollyPodcasts({
+  Future<ApiResponse<ApiResponse<PaginatedPodcastsDto>>> getTopJollyPodcasts({
     @Query('page') int page = 1,
     @Query('per_page') int perPage = 10,
   });

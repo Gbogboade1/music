@@ -32,11 +32,11 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
   Future<Either<String, List<EpisodeDto>>> getTrendingEpisodes({int page = 1, int perPage = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getTrendingEpisodes(page: page, perPage: perPage);
-      return response.data;
+      return response?.data?.data;
     });
     return result.fold(
       (error) => Left(error),
-      (data) => data != null ? Right(data.data) : const Left('No data returned from API'),
+      (data) => data != null ? Right(data) : const Left('No data returned from API'),
     );
   }
 
@@ -152,39 +152,30 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
   }
 
   @override
-  Future<Either<String, List<CategoryGroupDto>>> getCategoriesFromCache() async {
+  Future<Either<String, List<CategoryGroupDto>?>> getCategoriesFromCache() async {
     final result = await execute(() async {
       final response = await _dataSource.getCategoriesFromCache();
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, PaginatedEpisodesDto>> getRecentPlaysFromCache({int page = 1, int perPage = 10}) async {
+  Future<Either<String, PaginatedEpisodesDto?>> getRecentPlaysFromCache({int page = 1, int perPage = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getRecentPlaysFromCache(page: page, perPage: perPage);
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, List<EpisodeDto>>> getTrendingEpisodesFromCache({int page = 1, int perPage = 10}) async {
+  Future<Either<String, List<EpisodeDto>?>> getTrendingEpisodesFromCache({int page = 1, int perPage = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getTrendingEpisodesFromCache(page: page, perPage: perPage);
-      return response.data;
+      return response.data?.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data.data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
@@ -197,43 +188,34 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
   }
 
   @override
-  Future<Either<String, List<PodcastDto>>> getTopJollyPodcastsFromCache({int page = 1, int perPage = 10}) async {
+  Future<Either<String, List<PodcastDto>?>> getTopJollyPodcastsFromCache({int page = 1, int perPage = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getTopJollyPodcastsFromCache(page: page, perPage: perPage);
-      return response.data;
+      return response.data?.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data.data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, HandpickedEpisodesDto>> getHandpickedEpisodesFromCache({int amount = 10}) async {
+  Future<Either<String, HandpickedEpisodesDto?>> getHandpickedEpisodesFromCache({int amount = 10}) async {
     final result = await execute(() async {
       final response = await _dataSource.getHandpickedEpisodesFromCache(amount: amount);
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, PaginatedKeywordsDto>> getKeywordsFromCache({int page = 1, int perPage = 20}) async {
+  Future<Either<String, PaginatedKeywordsDto?>> getKeywordsFromCache({int page = 1, int perPage = 20}) async {
     final result = await execute(() async {
       final response = await _dataSource.getKeywordsFromCache(page: page, perPage: perPage);
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, PaginatedEpisodesDto>> getTrendingEpisodesByCategoryFromCache({
+  Future<Either<String, PaginatedEpisodesDto?>> getTrendingEpisodesByCategoryFromCache({
     required String categoryType,
     String? subCategoryName,
     int page = 1,
@@ -248,14 +230,11 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
       );
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override
-  Future<Either<String, PaginatedFavoriteEpisodesDto>> getFavoriteEpisodesFromCache({
+  Future<Either<String, PaginatedFavoriteEpisodesDto?>> getFavoriteEpisodesFromCache({
     int page = 1,
     int perPage = 10,
   }) async {
@@ -263,10 +242,7 @@ class PodcastServiceImpl extends PodcastService with ApiServiceHandlerMixin {
       final response = await _dataSource.getFavoriteEpisodesFromCache(page: page, perPage: perPage);
       return response.data;
     });
-    return result.fold(
-      (error) => Left(error),
-      (data) => data != null ? Right(data) : const Left('No data returned from cache'),
-    );
+    return result.fold((error) => Left(error), (data) => Right(data));
   }
 
   @override

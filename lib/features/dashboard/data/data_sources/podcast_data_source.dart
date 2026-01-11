@@ -16,17 +16,6 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     const endpoint = '/api/episodes/plays';
     final params = {'page': page, 'per_page': perPage};
 
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<PaginatedEpisodesDto>>(
-      endpoint,
-      params,
-      (json) => ApiResponse.fromJson(json, (data) => PaginatedEpisodesDto.fromJson(data as Map<String, dynamic>)),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
-
     // If not in cache, fetch from API
     return handleApiCall(() async {
       final response = await _api.getRecentPlays(page: page, perPage: perPage);
@@ -43,20 +32,9 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     });
   }
 
-  Future<ApiResponse<PaginatedEpisodesDto>> getTrendingEpisodes({int page = 1, int perPage = 10}) async {
+  Future<ApiResponse<PaginatedEpisodesDto>?> getTrendingEpisodes({int page = 1, int perPage = 10}) async {
     const endpoint = '/api/episodes/trending';
     final params = {'page': page, 'per_page': perPage};
-
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<PaginatedEpisodesDto>>(
-      endpoint,
-      params,
-      (json) => ApiResponse.fromJson(json, (data) => PaginatedEpisodesDto.fromJson(data as Map<String, dynamic>)),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
 
     // If not in cache, fetch from API
     return handleApiCall(() async {
@@ -66,27 +44,16 @@ class PodcastDataSource with ApiErrorHandlerMixin {
       await _cacheManager.saveToCache<ApiResponse<PaginatedEpisodesDto>>(
         endpoint,
         params,
-        response,
+        response.data,
         (data) => data.toJson((obj) => obj.toJson()),
       );
 
-      return response;
+      return response.data;
     });
   }
 
   Future<ApiResponse<EpisodeDto>> getEditorPick() async {
     const endpoint = '/api/episodes/editor-pick';
-
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<EpisodeDto>>(
-      endpoint,
-      null,
-      (json) => ApiResponse.fromJson(json, (data) => EpisodeDto.fromJson(data as Map<String, dynamic>)),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
 
     // If not in cache, fetch from API
     return handleApiCall(() async {
@@ -96,28 +63,17 @@ class PodcastDataSource with ApiErrorHandlerMixin {
       await _cacheManager.saveToCache<ApiResponse<EpisodeDto>>(
         endpoint,
         null,
-        response,
+        response.data,
         (data) => data.toJson((obj) => obj.toJson()),
       );
 
-      return response;
+      return response.data!;
     });
   }
 
   Future<ApiResponse<PaginatedPodcastsDto>> getTopJollyPodcasts({int page = 1, int perPage = 10}) async {
     const endpoint = '/api/podcasts/top-jolly';
     final params = {'page': page, 'per_page': perPage};
-
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<PaginatedPodcastsDto>>(
-      endpoint,
-      params,
-      (json) => ApiResponse.fromJson(json, (data) => PaginatedPodcastsDto.fromJson(data as Map<String, dynamic>)),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
 
     // If not in cache, fetch from API
     return handleApiCall(() async {
@@ -127,28 +83,17 @@ class PodcastDataSource with ApiErrorHandlerMixin {
       await _cacheManager.saveToCache<ApiResponse<PaginatedPodcastsDto>>(
         endpoint,
         params,
-        response,
+        response.data,
         (data) => data.toJson((obj) => obj.toJson()),
       );
 
-      return response;
+      return response.data!;
     });
   }
 
   Future<ApiResponse<HandpickedEpisodesDto>> getHandpickedEpisodes({int amount = 10}) async {
     const endpoint = '/api/podcasts/handpicked';
     final params = {'amount': amount};
-
-    // Try to get from cache first
-    final cached = await _cacheManager.getFromCache<ApiResponse<HandpickedEpisodesDto>>(
-      endpoint,
-      params,
-      (json) => ApiResponse.fromJson(json, (data) => HandpickedEpisodesDto.fromJson(data as Map<String, dynamic>)),
-    );
-
-    if (cached != null) {
-      return cached;
-    }
 
     // If not in cache, fetch from API
     return handleApiCall(() async {
@@ -353,7 +298,7 @@ class PodcastDataSource with ApiErrorHandlerMixin {
   }
 
   // Cache-only methods - retrieve data only from local cache
-  Future<ApiResponse<PaginatedEpisodesDto>> getRecentPlaysFromCache({int page = 1, int perPage = 10}) async {
+  Future<ApiResponse<PaginatedEpisodesDto?>> getRecentPlaysFromCache({int page = 1, int perPage = 10}) async {
     const endpoint = '/api/episodes/plays';
     final params = {'page': page, 'per_page': perPage};
 
@@ -364,13 +309,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedEpisodesDto?>;
     } else {
-      throw Exception('No cached data available for recent plays');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<PaginatedEpisodesDto>> getTrendingEpisodesFromCache({int page = 1, int perPage = 10}) async {
+  Future<ApiResponse<PaginatedEpisodesDto?>> getTrendingEpisodesFromCache({int page = 1, int perPage = 10}) async {
     const endpoint = '/api/episodes/trending';
     final params = {'page': page, 'per_page': perPage};
 
@@ -381,13 +326,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedEpisodesDto?>;
     } else {
-      throw Exception('No cached data available for trending episodes');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<EpisodeDto>> getEditorPickFromCache() async {
+  Future<ApiResponse<EpisodeDto?>> getEditorPickFromCache() async {
     const endpoint = '/api/episodes/editor-pick';
     final params = <String, dynamic>{};
 
@@ -398,13 +343,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<EpisodeDto?>;
     } else {
-      throw Exception('No cached data available for editor pick');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<PaginatedPodcastsDto>> getTopJollyPodcastsFromCache({int page = 1, int perPage = 10}) async {
+  Future<ApiResponse<PaginatedPodcastsDto?>> getTopJollyPodcastsFromCache({int page = 1, int perPage = 10}) async {
     const endpoint = '/api/podcasts/top-jolly';
     final params = {'page': page, 'per_page': perPage};
 
@@ -415,13 +360,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedPodcastsDto?>;
     } else {
-      throw Exception('No cached data available for top jolly podcasts');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<HandpickedEpisodesDto>> getHandpickedEpisodesFromCache({int amount = 10}) async {
+  Future<ApiResponse<HandpickedEpisodesDto?>> getHandpickedEpisodesFromCache({int amount = 10}) async {
     const endpoint = '/api/episodes/handpicked';
     final params = {'amount': amount};
 
@@ -432,13 +377,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<HandpickedEpisodesDto?>;
     } else {
-      throw Exception('No cached data available for handpicked episodes');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<PaginatedKeywordsDto>> getKeywordsFromCache({int page = 1, int perPage = 20}) async {
+  Future<ApiResponse<PaginatedKeywordsDto?>> getKeywordsFromCache({int page = 1, int perPage = 20}) async {
     const endpoint = '/api/episodes/keywords';
     final params = {'page': page, 'per_page': perPage};
 
@@ -449,13 +394,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedKeywordsDto?>;
     } else {
-      throw Exception('No cached data available for keywords');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<List<CategoryGroupDto>>> getCategoriesFromCache() async {
+  Future<ApiResponse<List<CategoryGroupDto>?>> getCategoriesFromCache() async {
     const endpoint = '/api/categories';
     final params = <String, dynamic>{};
 
@@ -469,13 +414,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<List<CategoryGroupDto>?>;
     } else {
-      throw Exception('No cached data available for categories');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<PaginatedEpisodesDto>> getTrendingEpisodesByCategoryFromCache({
+  Future<ApiResponse<PaginatedEpisodesDto?>> getTrendingEpisodesByCategoryFromCache({
     required String categoryType,
     String? subCategoryName,
     int page = 1,
@@ -496,13 +441,13 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedEpisodesDto?>;
     } else {
-      throw Exception('No cached data available for trending episodes by category');
+      return const ApiResponse(data: null);
     }
   }
 
-  Future<ApiResponse<PaginatedFavoriteEpisodesDto>> getFavoriteEpisodesFromCache({
+  Future<ApiResponse<PaginatedFavoriteEpisodesDto?>> getFavoriteEpisodesFromCache({
     int page = 1,
     int perPage = 10,
   }) async {
@@ -517,9 +462,9 @@ class PodcastDataSource with ApiErrorHandlerMixin {
     );
 
     if (cached != null) {
-      return cached;
+      return cached as ApiResponse<PaginatedFavoriteEpisodesDto?>;
     } else {
-      throw Exception('No cached data available for favorite episodes');
+      return const ApiResponse(data: null);
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:music/core/services/failure_extension.dart';
-import 'package:music/features/dashboard/domain/services/podcast_service.dart';
+import '../../../../../core/services/failure_extension.dart';
+import '../../../domain/services/podcast_service.dart';
 import '../../../data/models/podcast_models.dart';
 import '../entities/discover_model.dart';
 
@@ -31,21 +31,26 @@ class DiscoverBloc extends Bloc<DiscoverEvent, DiscoverState> {
     emit(
       DiscoverState.loading(
         state.model.copyWith(
+          trending: (cached[0] as List<EpisodeDto>?) ?? [],
           editorPick: cached[1] as EpisodeDto?,
-          trending: cached[0] as List<EpisodeDto>,
-          topJolly: cached[2] as List<PodcastDto>,
+          topJolly: (cached[2] as List<PodcastDto>?) ?? [],
         ),
       ),
     );
 
     final live = await Future.wait([
-      _podcastService.getTrendingEpisodes(),
+      _podcastService.getTrendingEpisodes().getOrDefault((cached[0] as List<EpisodeDto>?) ?? []),
       _podcastService.getEditorPick().getOrDefault(cached[1] as EpisodeDto?),
+      _podcastService.getTopJollyPodcasts().getOrDefault((cached[2] as List<PodcastDto>?) ?? []),
     ]);
 
     emit(
       DiscoverState.success(
-        state.model.copyWith(editorPick: live[1] as EpisodeDto?, trending: live[0] as List<EpisodeDto>),
+        state.model.copyWith(
+          trending: (live[0] as List<EpisodeDto>?) ?? (cached[0] as List<EpisodeDto>?) ?? [],
+          editorPick: (live[1] as EpisodeDto?) ?? (cached[1] as EpisodeDto?),
+          topJolly: (live[2] as List<PodcastDto>?) ?? (cached[2] as List<PodcastDto>?) ?? [],
+        ),
       ),
     );
   }
