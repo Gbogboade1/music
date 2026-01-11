@@ -44,9 +44,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-*.g.dart
-injectable.config.dart
-/lib/gen/
 .flutter-plugins
 .flutter-plugins-dependencies
 private_key.pepk

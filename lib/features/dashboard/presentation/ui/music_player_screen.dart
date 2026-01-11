@@ -207,42 +207,54 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     );
   }
 
-  Widget _buildProgressBar(int durationSeconds) {
-    // Note: Assuming duration is in seconds. The Bloc doesn't provide current position yet.
-    // We will show static 0 and full duration for now, or a dummy slider.
-    // podcast_details says "minutes". So 30 minutes.
-    final totalMinutes = durationSeconds;
+  Widget _buildProgressBar(int durationMinutes) {
+    return BlocBuilder<PlayerBloc, PlayerState>(
+      builder: (context, state) {
+        final playedMs = state.model.currentPlayedDuration;
+        final playedSeconds = playedMs ~/ 1000;
+        final durationSeconds = durationMinutes * 60;
+        final maxSeconds = durationSeconds > 0 ? durationSeconds : 1;
 
-    return Column(
-      children: [
-        SliderTheme(
-          data: SliderTheme.of(context).copyWith(
-            trackHeight: 4,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
-            activeTrackColor: Colors.white,
-            inactiveTrackColor: Colors.white24,
-            thumbColor: Colors.white,
-          ),
-          child: Slider(
-            value: 0,
-            min: 0,
-            max: (totalMinutes * 60).toDouble() > 0 ? (totalMinutes * 60).toDouble() : 1.0,
-            onChanged: (value) {},
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text("00:00", style: TextStyle(color: Colors.white70, fontSize: 12)),
-              Text("$totalMinutes:00", style: const TextStyle(color: Colors.white70, fontSize: 12)),
-            ],
-          ),
-        ),
-      ],
+        return Column(
+          children: [
+            SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 4,
+                thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
+                overlayShape: const RoundSliderOverlayShape(overlayRadius: 14),
+                activeTrackColor: Colors.white,
+                inactiveTrackColor: Colors.white24,
+                thumbColor: Colors.white,
+              ),
+              child: Slider(
+                value: playedSeconds.toDouble().clamp(0, maxSeconds.toDouble()),
+                min: 0,
+                max: maxSeconds.toDouble(),
+                onChanged: (value) {
+                  context.read<PlayerBloc>().add(PlayerEvent.seek((value * 1000).toInt()));
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(_formatDuration(playedSeconds), style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                  Text(_formatDuration(durationSeconds), style: const TextStyle(color: Colors.white70, fontSize: 12)),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
     );
+  }
+
+  String _formatDuration(int seconds) {
+    final minutes = seconds ~/ 60;
+    final secs = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
   }
 
   Widget _buildActionButton(IconData icon, String label, VoidCallback onTap, {bool trailing = false}) {

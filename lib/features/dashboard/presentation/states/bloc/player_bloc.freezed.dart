@@ -55,7 +55,7 @@ extension PlayerEventPatterns on PlayerEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _PlayCurrent value)?  playCurrent,TResult Function( _PlayLast value)?  playLast,TResult Function( _PlayNext value)?  playNext,TResult Function( _Pause value)?  pause,TResult Function( _Rewind10 value)?  rewind10,TResult Function( _Skip10 value)?  skip10,TResult Function( _Reset value)?  reset,TResult Function( _UpdateIsPlaying value)?  updateIsPlaying,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _PlayCurrent value)?  playCurrent,TResult Function( _PlayLast value)?  playLast,TResult Function( _PlayNext value)?  playNext,TResult Function( _Pause value)?  pause,TResult Function( _Rewind10 value)?  rewind10,TResult Function( _Skip10 value)?  skip10,TResult Function( _Reset value)?  reset,TResult Function( _UpdateIsPlaying value)?  updateIsPlaying,TResult Function( _UpdatePlayedDuration value)?  updatePlayedDuration,TResult Function( _Seek value)?  seek,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _PlayCurrent() when playCurrent != null:
@@ -66,7 +66,9 @@ return pause(_that);case _Rewind10() when rewind10 != null:
 return rewind10(_that);case _Skip10() when skip10 != null:
 return skip10(_that);case _Reset() when reset != null:
 return reset(_that);case _UpdateIsPlaying() when updateIsPlaying != null:
-return updateIsPlaying(_that);case _:
+return updateIsPlaying(_that);case _UpdatePlayedDuration() when updatePlayedDuration != null:
+return updatePlayedDuration(_that);case _Seek() when seek != null:
+return seek(_that);case _:
   return orElse();
 
 }
@@ -84,7 +86,7 @@ return updateIsPlaying(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _PlayCurrent value)  playCurrent,required TResult Function( _PlayLast value)  playLast,required TResult Function( _PlayNext value)  playNext,required TResult Function( _Pause value)  pause,required TResult Function( _Rewind10 value)  rewind10,required TResult Function( _Skip10 value)  skip10,required TResult Function( _Reset value)  reset,required TResult Function( _UpdateIsPlaying value)  updateIsPlaying,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _PlayCurrent value)  playCurrent,required TResult Function( _PlayLast value)  playLast,required TResult Function( _PlayNext value)  playNext,required TResult Function( _Pause value)  pause,required TResult Function( _Rewind10 value)  rewind10,required TResult Function( _Skip10 value)  skip10,required TResult Function( _Reset value)  reset,required TResult Function( _UpdateIsPlaying value)  updateIsPlaying,required TResult Function( _UpdatePlayedDuration value)  updatePlayedDuration,required TResult Function( _Seek value)  seek,}){
 final _that = this;
 switch (_that) {
 case _PlayCurrent():
@@ -95,7 +97,9 @@ return pause(_that);case _Rewind10():
 return rewind10(_that);case _Skip10():
 return skip10(_that);case _Reset():
 return reset(_that);case _UpdateIsPlaying():
-return updateIsPlaying(_that);}
+return updateIsPlaying(_that);case _UpdatePlayedDuration():
+return updatePlayedDuration(_that);case _Seek():
+return seek(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
 ///
@@ -109,7 +113,7 @@ return updateIsPlaying(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _PlayCurrent value)?  playCurrent,TResult? Function( _PlayLast value)?  playLast,TResult? Function( _PlayNext value)?  playNext,TResult? Function( _Pause value)?  pause,TResult? Function( _Rewind10 value)?  rewind10,TResult? Function( _Skip10 value)?  skip10,TResult? Function( _Reset value)?  reset,TResult? Function( _UpdateIsPlaying value)?  updateIsPlaying,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _PlayCurrent value)?  playCurrent,TResult? Function( _PlayLast value)?  playLast,TResult? Function( _PlayNext value)?  playNext,TResult? Function( _Pause value)?  pause,TResult? Function( _Rewind10 value)?  rewind10,TResult? Function( _Skip10 value)?  skip10,TResult? Function( _Reset value)?  reset,TResult? Function( _UpdateIsPlaying value)?  updateIsPlaying,TResult? Function( _UpdatePlayedDuration value)?  updatePlayedDuration,TResult? Function( _Seek value)?  seek,}){
 final _that = this;
 switch (_that) {
 case _PlayCurrent() when playCurrent != null:
@@ -120,7 +124,9 @@ return pause(_that);case _Rewind10() when rewind10 != null:
 return rewind10(_that);case _Skip10() when skip10 != null:
 return skip10(_that);case _Reset() when reset != null:
 return reset(_that);case _UpdateIsPlaying() when updateIsPlaying != null:
-return updateIsPlaying(_that);case _:
+return updateIsPlaying(_that);case _UpdatePlayedDuration() when updatePlayedDuration != null:
+return updatePlayedDuration(_that);case _Seek() when seek != null:
+return seek(_that);case _:
   return null;
 
 }
@@ -137,7 +143,7 @@ return updateIsPlaying(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  playCurrent,TResult Function()?  playLast,TResult Function()?  playNext,TResult Function()?  pause,TResult Function()?  rewind10,TResult Function()?  skip10,TResult Function( PlayerModel data)?  reset,TResult Function( bool isPlaying)?  updateIsPlaying,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  playCurrent,TResult Function()?  playLast,TResult Function()?  playNext,TResult Function()?  pause,TResult Function()?  rewind10,TResult Function()?  skip10,TResult Function( PlayerModel data)?  reset,TResult Function( bool isPlaying)?  updateIsPlaying,TResult Function( int milliseconds)?  updatePlayedDuration,TResult Function( int milliseconds)?  seek,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlayCurrent() when playCurrent != null:
 return playCurrent();case _PlayLast() when playLast != null:
@@ -147,7 +153,9 @@ return pause();case _Rewind10() when rewind10 != null:
 return rewind10();case _Skip10() when skip10 != null:
 return skip10();case _Reset() when reset != null:
 return reset(_that.data);case _UpdateIsPlaying() when updateIsPlaying != null:
-return updateIsPlaying(_that.isPlaying);case _:
+return updateIsPlaying(_that.isPlaying);case _UpdatePlayedDuration() when updatePlayedDuration != null:
+return updatePlayedDuration(_that.milliseconds);case _Seek() when seek != null:
+return seek(_that.milliseconds);case _:
   return orElse();
 
 }
@@ -165,7 +173,7 @@ return updateIsPlaying(_that.isPlaying);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  playCurrent,required TResult Function()  playLast,required TResult Function()  playNext,required TResult Function()  pause,required TResult Function()  rewind10,required TResult Function()  skip10,required TResult Function( PlayerModel data)  reset,required TResult Function( bool isPlaying)  updateIsPlaying,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  playCurrent,required TResult Function()  playLast,required TResult Function()  playNext,required TResult Function()  pause,required TResult Function()  rewind10,required TResult Function()  skip10,required TResult Function( PlayerModel data)  reset,required TResult Function( bool isPlaying)  updateIsPlaying,required TResult Function( int milliseconds)  updatePlayedDuration,required TResult Function( int milliseconds)  seek,}) {final _that = this;
 switch (_that) {
 case _PlayCurrent():
 return playCurrent();case _PlayLast():
@@ -175,7 +183,9 @@ return pause();case _Rewind10():
 return rewind10();case _Skip10():
 return skip10();case _Reset():
 return reset(_that.data);case _UpdateIsPlaying():
-return updateIsPlaying(_that.isPlaying);}
+return updateIsPlaying(_that.isPlaying);case _UpdatePlayedDuration():
+return updatePlayedDuration(_that.milliseconds);case _Seek():
+return seek(_that.milliseconds);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -189,7 +199,7 @@ return updateIsPlaying(_that.isPlaying);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  playCurrent,TResult? Function()?  playLast,TResult? Function()?  playNext,TResult? Function()?  pause,TResult? Function()?  rewind10,TResult? Function()?  skip10,TResult? Function( PlayerModel data)?  reset,TResult? Function( bool isPlaying)?  updateIsPlaying,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  playCurrent,TResult? Function()?  playLast,TResult? Function()?  playNext,TResult? Function()?  pause,TResult? Function()?  rewind10,TResult? Function()?  skip10,TResult? Function( PlayerModel data)?  reset,TResult? Function( bool isPlaying)?  updateIsPlaying,TResult? Function( int milliseconds)?  updatePlayedDuration,TResult? Function( int milliseconds)?  seek,}) {final _that = this;
 switch (_that) {
 case _PlayCurrent() when playCurrent != null:
 return playCurrent();case _PlayLast() when playLast != null:
@@ -199,7 +209,9 @@ return pause();case _Rewind10() when rewind10 != null:
 return rewind10();case _Skip10() when skip10 != null:
 return skip10();case _Reset() when reset != null:
 return reset(_that.data);case _UpdateIsPlaying() when updateIsPlaying != null:
-return updateIsPlaying(_that.isPlaying);case _:
+return updateIsPlaying(_that.isPlaying);case _UpdatePlayedDuration() when updatePlayedDuration != null:
+return updatePlayedDuration(_that.milliseconds);case _Seek() when seek != null:
+return seek(_that.milliseconds);case _:
   return null;
 
 }
@@ -534,6 +546,138 @@ class __$UpdateIsPlayingCopyWithImpl<$Res>
   return _then(_UpdateIsPlaying(
 null == isPlaying ? _self.isPlaying : isPlaying // ignore: cast_nullable_to_non_nullable
 as bool,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _UpdatePlayedDuration implements PlayerEvent {
+  const _UpdatePlayedDuration(this.milliseconds);
+  
+
+ final  int milliseconds;
+
+/// Create a copy of PlayerEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UpdatePlayedDurationCopyWith<_UpdatePlayedDuration> get copyWith => __$UpdatePlayedDurationCopyWithImpl<_UpdatePlayedDuration>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdatePlayedDuration&&(identical(other.milliseconds, milliseconds) || other.milliseconds == milliseconds));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,milliseconds);
+
+@override
+String toString() {
+  return 'PlayerEvent.updatePlayedDuration(milliseconds: $milliseconds)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UpdatePlayedDurationCopyWith<$Res> implements $PlayerEventCopyWith<$Res> {
+  factory _$UpdatePlayedDurationCopyWith(_UpdatePlayedDuration value, $Res Function(_UpdatePlayedDuration) _then) = __$UpdatePlayedDurationCopyWithImpl;
+@useResult
+$Res call({
+ int milliseconds
+});
+
+
+
+
+}
+/// @nodoc
+class __$UpdatePlayedDurationCopyWithImpl<$Res>
+    implements _$UpdatePlayedDurationCopyWith<$Res> {
+  __$UpdatePlayedDurationCopyWithImpl(this._self, this._then);
+
+  final _UpdatePlayedDuration _self;
+  final $Res Function(_UpdatePlayedDuration) _then;
+
+/// Create a copy of PlayerEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? milliseconds = null,}) {
+  return _then(_UpdatePlayedDuration(
+null == milliseconds ? _self.milliseconds : milliseconds // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _Seek implements PlayerEvent {
+  const _Seek(this.milliseconds);
+  
+
+ final  int milliseconds;
+
+/// Create a copy of PlayerEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SeekCopyWith<_Seek> get copyWith => __$SeekCopyWithImpl<_Seek>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Seek&&(identical(other.milliseconds, milliseconds) || other.milliseconds == milliseconds));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,milliseconds);
+
+@override
+String toString() {
+  return 'PlayerEvent.seek(milliseconds: $milliseconds)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SeekCopyWith<$Res> implements $PlayerEventCopyWith<$Res> {
+  factory _$SeekCopyWith(_Seek value, $Res Function(_Seek) _then) = __$SeekCopyWithImpl;
+@useResult
+$Res call({
+ int milliseconds
+});
+
+
+
+
+}
+/// @nodoc
+class __$SeekCopyWithImpl<$Res>
+    implements _$SeekCopyWith<$Res> {
+  __$SeekCopyWithImpl(this._self, this._then);
+
+  final _Seek _self;
+  final $Res Function(_Seek) _then;
+
+/// Create a copy of PlayerEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? milliseconds = null,}) {
+  return _then(_Seek(
+null == milliseconds ? _self.milliseconds : milliseconds // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

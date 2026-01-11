@@ -12,6 +12,7 @@ part 'player_bloc.freezed.dart';
 class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   final AudioPlayerService _audioPlayerService;
   StreamSubscription<bool>? _playerStatusSubscription;
+  StreamSubscription<int>? _playedDurationSubscription;
 
   PlayerBloc(this._audioPlayerService) : super(const PlayerState.initial()) {
     on<_PlayCurrent>(_onPlayCurrent);
@@ -22,10 +23,17 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<_Skip10>(_onSkip10);
     on<_Reset>(_onReset);
     on<_UpdateIsPlaying>(_onUpdateIsPlaying);
+    on<_UpdatePlayedDuration>(_onUpdatePlayedDuration);
+    on<_Seek>(_onSeek);
 
     // Listen to player status stream
     _playerStatusSubscription = _audioPlayerService.playerStatusStream.listen((isPlaying) {
       add(PlayerEvent.updateIsPlaying(isPlaying));
+    });
+
+    // Listen to played duration stream (milliseconds)
+    _playedDurationSubscription = _audioPlayerService.playedDurationStream.listen((ms) {
+      add(PlayerEvent.updatePlayedDuration(ms));
     });
   }
 
@@ -170,9 +178,32 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     }
   }
 
+  Future<void> _onUpdatePlayedDuration(_UpdatePlayedDuration event, Emitter<PlayerState> emit) async {
+    final updatedModel = state.model.copyWith(currentPlayedDuration: event.milliseconds);
+
+    // Emit current state type with updated duration
+    if (state is PlayerPlaying) {
+      emit(PlayerState.playing(updatedModel));
+    } else if (state is PlayerPaused) {
+      emit(PlayerState.paused(updatedModel));
+    } else {
+      emit(PlayerState.loading(updatedModel));
+    }
+  }
+
+  Future<void> _onSeek(_Seek event, Emitter<PlayerState> emit) async {
+    final result = await _audioPlayerService.seek(event.milliseconds);
+
+    result.fold(
+      (error) => emit(PlayerState.playFailed(state.model, error)),
+      (_) => emit(PlayerState.playing(state.model.copyWith())),
+    );
+  }
+
   @override
   Future<void> close() async {
     await _playerStatusSubscription?.cancel();
+    await _playedDurationSubscription?.cancel();
     await _audioPlayerService.dispose();
     return super.close();
   }

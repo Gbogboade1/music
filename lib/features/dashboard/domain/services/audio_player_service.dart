@@ -5,6 +5,9 @@ abstract class AudioPlayerService {
   /// Stream of player status (playing/paused)
   Stream<bool> get playerStatusStream;
 
+  /// Stream of current playback position in milliseconds
+  Stream<int> get playedDurationStream;
+
   /// Play the current episode
   Future<Either<String, void>> playCurrent(EpisodeDto episode);
 
@@ -19,6 +22,9 @@ abstract class AudioPlayerService {
 
   /// Rewind backward 10 seconds
   Future<Either<String, void>> rewind10();
+
+  /// Seek to specific position in milliseconds
+  Future<Either<String, void>> seek(int milliseconds);
 
   /// Get current playback position in seconds
   Future<Either<String, int>> getCurrentPosition();

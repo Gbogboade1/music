@@ -12,6 +12,9 @@ class AudioPlayerServiceImpl implements AudioPlayerService {
   Stream<bool> get playerStatusStream => _audioPlayer.playingStream;
 
   @override
+  Stream<int> get playedDurationStream => _audioPlayer.positionStream.map((duration) => duration.inMilliseconds);
+
+  @override
   Future<Either<String, void>> playCurrent(EpisodeDto episode) async {
     try {
       await _audioPlayer.setUrl(episode.contentUrl);
@@ -63,6 +66,16 @@ class AudioPlayerServiceImpl implements AudioPlayerService {
       return const Right(null);
     } catch (e) {
       return Left('Failed to rewind: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<Either<String, void>> seek(int milliseconds) async {
+    try {
+      await _audioPlayer.seek(Duration(milliseconds: milliseconds));
+      return const Right(null);
+    } catch (e) {
+      return Left('Failed to seek: ${e.toString()}');
     }
   }
 

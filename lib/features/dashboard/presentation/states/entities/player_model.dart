@@ -11,5 +11,6 @@ sealed class PlayerModel with _$PlayerModel {
     @Default(<EpisodeDto>[]) List<EpisodeDto> nextList,
     PodcastDto? podcast,
     @Default(false) bool isPlaying,
+    @Default(0) int currentPlayedDuration,
   }) = _PlayerModel;
 }

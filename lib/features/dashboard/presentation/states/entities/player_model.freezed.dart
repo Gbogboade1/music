@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PlayerModel {
 
- EpisodeDto? get currentEpisode; List<EpisodeDto> get rewindList; List<EpisodeDto> get nextList; PodcastDto? get podcast; bool get isPlaying;
+ EpisodeDto? get currentEpisode; List<EpisodeDto> get rewindList; List<EpisodeDto> get nextList; PodcastDto? get podcast; bool get isPlaying; int get currentPlayedDuration;
 /// Create a copy of PlayerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $PlayerModelCopyWith<PlayerModel> get copyWith => _$PlayerModelCopyWithImpl<Play
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerModel&&(identical(other.currentEpisode, currentEpisode) || other.currentEpisode == currentEpisode)&&const DeepCollectionEquality().equals(other.rewindList, rewindList)&&const DeepCollectionEquality().equals(other.nextList, nextList)&&(identical(other.podcast, podcast) || other.podcast == podcast)&&(identical(other.isPlaying, isPlaying) || other.isPlaying == isPlaying));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerModel&&(identical(other.currentEpisode, currentEpisode) || other.currentEpisode == currentEpisode)&&const DeepCollectionEquality().equals(other.rewindList, rewindList)&&const DeepCollectionEquality().equals(other.nextList, nextList)&&(identical(other.podcast, podcast) || other.podcast == podcast)&&(identical(other.isPlaying, isPlaying) || other.isPlaying == isPlaying)&&(identical(other.currentPlayedDuration, currentPlayedDuration) || other.currentPlayedDuration == currentPlayedDuration));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentEpisode,const DeepCollectionEquality().hash(rewindList),const DeepCollectionEquality().hash(nextList),podcast,isPlaying);
+int get hashCode => Object.hash(runtimeType,currentEpisode,const DeepCollectionEquality().hash(rewindList),const DeepCollectionEquality().hash(nextList),podcast,isPlaying,currentPlayedDuration);
 
 @override
 String toString() {
-  return 'PlayerModel(currentEpisode: $currentEpisode, rewindList: $rewindList, nextList: $nextList, podcast: $podcast, isPlaying: $isPlaying)';
+  return 'PlayerModel(currentEpisode: $currentEpisode, rewindList: $rewindList, nextList: $nextList, podcast: $podcast, isPlaying: $isPlaying, currentPlayedDuration: $currentPlayedDuration)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $PlayerModelCopyWith<$Res>  {
   factory $PlayerModelCopyWith(PlayerModel value, $Res Function(PlayerModel) _then) = _$PlayerModelCopyWithImpl;
 @useResult
 $Res call({
- EpisodeDto? currentEpisode, List<EpisodeDto> rewindList, List<EpisodeDto> nextList, PodcastDto? podcast, bool isPlaying
+ EpisodeDto? currentEpisode, List<EpisodeDto> rewindList, List<EpisodeDto> nextList, PodcastDto? podcast, bool isPlaying, int currentPlayedDuration
 });
 
 
@@ -62,14 +62,15 @@ class _$PlayerModelCopyWithImpl<$Res>
 
 /// Create a copy of PlayerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? currentEpisode = freezed,Object? rewindList = null,Object? nextList = null,Object? podcast = freezed,Object? isPlaying = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? currentEpisode = freezed,Object? rewindList = null,Object? nextList = null,Object? podcast = freezed,Object? isPlaying = null,Object? currentPlayedDuration = null,}) {
   return _then(_self.copyWith(
 currentEpisode: freezed == currentEpisode ? _self.currentEpisode : currentEpisode // ignore: cast_nullable_to_non_nullable
 as EpisodeDto?,rewindList: null == rewindList ? _self.rewindList : rewindList // ignore: cast_nullable_to_non_nullable
 as List<EpisodeDto>,nextList: null == nextList ? _self.nextList : nextList // ignore: cast_nullable_to_non_nullable
 as List<EpisodeDto>,podcast: freezed == podcast ? _self.podcast : podcast // ignore: cast_nullable_to_non_nullable
 as PodcastDto?,isPlaying: null == isPlaying ? _self.isPlaying : isPlaying // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,currentPlayedDuration: null == currentPlayedDuration ? _self.currentPlayedDuration : currentPlayedDuration // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 /// Create a copy of PlayerModel
@@ -175,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying,  int currentPlayedDuration)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PlayerModel() when $default != null:
-return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying);case _:
+return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying,_that.currentPlayedDuration);case _:
   return orElse();
 
 }
@@ -196,10 +197,10 @@ return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podca
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying,  int currentPlayedDuration)  $default,) {final _that = this;
 switch (_that) {
 case _PlayerModel():
-return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying);}
+return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying,_that.currentPlayedDuration);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -213,10 +214,10 @@ return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podca
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( EpisodeDto? currentEpisode,  List<EpisodeDto> rewindList,  List<EpisodeDto> nextList,  PodcastDto? podcast,  bool isPlaying,  int currentPlayedDuration)?  $default,) {final _that = this;
 switch (_that) {
 case _PlayerModel() when $default != null:
-return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying);case _:
+return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podcast,_that.isPlaying,_that.currentPlayedDuration);case _:
   return null;
 
 }
@@ -228,7 +229,7 @@ return $default(_that.currentEpisode,_that.rewindList,_that.nextList,_that.podca
 
 
 class _PlayerModel implements PlayerModel {
-  const _PlayerModel({this.currentEpisode, final  List<EpisodeDto> rewindList = const <EpisodeDto>[], final  List<EpisodeDto> nextList = const <EpisodeDto>[], this.podcast, this.isPlaying = false}): _rewindList = rewindList,_nextList = nextList;
+  const _PlayerModel({this.currentEpisode, final  List<EpisodeDto> rewindList = const <EpisodeDto>[], final  List<EpisodeDto> nextList = const <EpisodeDto>[], this.podcast, this.isPlaying = false, this.currentPlayedDuration = 0}): _rewindList = rewindList,_nextList = nextList;
   
 
 @override final  EpisodeDto? currentEpisode;
@@ -248,6 +249,7 @@ class _PlayerModel implements PlayerModel {
 
 @override final  PodcastDto? podcast;
 @override@JsonKey() final  bool isPlaying;
+@override@JsonKey() final  int currentPlayedDuration;
 
 /// Create a copy of PlayerModel
 /// with the given fields replaced by the non-null parameter values.
@@ -259,16 +261,16 @@ _$PlayerModelCopyWith<_PlayerModel> get copyWith => __$PlayerModelCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerModel&&(identical(other.currentEpisode, currentEpisode) || other.currentEpisode == currentEpisode)&&const DeepCollectionEquality().equals(other._rewindList, _rewindList)&&const DeepCollectionEquality().equals(other._nextList, _nextList)&&(identical(other.podcast, podcast) || other.podcast == podcast)&&(identical(other.isPlaying, isPlaying) || other.isPlaying == isPlaying));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerModel&&(identical(other.currentEpisode, currentEpisode) || other.currentEpisode == currentEpisode)&&const DeepCollectionEquality().equals(other._rewindList, _rewindList)&&const DeepCollectionEquality().equals(other._nextList, _nextList)&&(identical(other.podcast, podcast) || other.podcast == podcast)&&(identical(other.isPlaying, isPlaying) || other.isPlaying == isPlaying)&&(identical(other.currentPlayedDuration, currentPlayedDuration) || other.currentPlayedDuration == currentPlayedDuration));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,currentEpisode,const DeepCollectionEquality().hash(_rewindList),const DeepCollectionEquality().hash(_nextList),podcast,isPlaying);
+int get hashCode => Object.hash(runtimeType,currentEpisode,const DeepCollectionEquality().hash(_rewindList),const DeepCollectionEquality().hash(_nextList),podcast,isPlaying,currentPlayedDuration);
 
 @override
 String toString() {
-  return 'PlayerModel(currentEpisode: $currentEpisode, rewindList: $rewindList, nextList: $nextList, podcast: $podcast, isPlaying: $isPlaying)';
+  return 'PlayerModel(currentEpisode: $currentEpisode, rewindList: $rewindList, nextList: $nextList, podcast: $podcast, isPlaying: $isPlaying, currentPlayedDuration: $currentPlayedDuration)';
 }
 
 
@@ -279,7 +281,7 @@ abstract mixin class _$PlayerModelCopyWith<$Res> implements $PlayerModelCopyWith
   factory _$PlayerModelCopyWith(_PlayerModel value, $Res Function(_PlayerModel) _then) = __$PlayerModelCopyWithImpl;
 @override @useResult
 $Res call({
- EpisodeDto? currentEpisode, List<EpisodeDto> rewindList, List<EpisodeDto> nextList, PodcastDto? podcast, bool isPlaying
+ EpisodeDto? currentEpisode, List<EpisodeDto> rewindList, List<EpisodeDto> nextList, PodcastDto? podcast, bool isPlaying, int currentPlayedDuration
 });
 
 
@@ -296,14 +298,15 @@ class __$PlayerModelCopyWithImpl<$Res>
 
 /// Create a copy of PlayerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? currentEpisode = freezed,Object? rewindList = null,Object? nextList = null,Object? podcast = freezed,Object? isPlaying = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? currentEpisode = freezed,Object? rewindList = null,Object? nextList = null,Object? podcast = freezed,Object? isPlaying = null,Object? currentPlayedDuration = null,}) {
   return _then(_PlayerModel(
 currentEpisode: freezed == currentEpisode ? _self.currentEpisode : currentEpisode // ignore: cast_nullable_to_non_nullable
 as EpisodeDto?,rewindList: null == rewindList ? _self._rewindList : rewindList // ignore: cast_nullable_to_non_nullable
 as List<EpisodeDto>,nextList: null == nextList ? _self._nextList : nextList // ignore: cast_nullable_to_non_nullable
 as List<EpisodeDto>,podcast: freezed == podcast ? _self.podcast : podcast // ignore: cast_nullable_to_non_nullable
 as PodcastDto?,isPlaying: null == isPlaying ? _self.isPlaying : isPlaying // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,currentPlayedDuration: null == currentPlayedDuration ? _self.currentPlayedDuration : currentPlayedDuration // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

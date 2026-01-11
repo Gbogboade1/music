@@ -10,4 +10,6 @@ sealed class PlayerEvent with _$PlayerEvent {
   const factory PlayerEvent.skip10() = _Skip10;
   const factory PlayerEvent.reset(PlayerModel data) = _Reset;
   const factory PlayerEvent.updateIsPlaying(bool isPlaying) = _UpdateIsPlaying;
+  const factory PlayerEvent.updatePlayedDuration(int milliseconds) = _UpdatePlayedDuration;
+  const factory PlayerEvent.seek(int milliseconds) = _Seek;
 }
