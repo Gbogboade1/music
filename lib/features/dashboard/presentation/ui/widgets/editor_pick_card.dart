@@ -1,4 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:music/features/dashboard/presentation/music_player_screen.dart';
+import 'package:music/features/dashboard/presentation/states/bloc/player_bloc.dart';
+import 'package:music/features/dashboard/presentation/states/entities/player_model.dart';
 
 import '../../../../../core/presentation/themes/app_color_palette.dart';
 import '../../../../../__lib.dart';
@@ -26,22 +29,28 @@ class EditorPickCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 140,
-              width: 140,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl: episode.pictureUrl,
-                      fit: BoxFit.cover,
-                      errorWidget: (c, o, s) => Container(color: Colors.grey),
-                    ),
-                    Container(color: Colors.black.addOpacity(100 * 0.2)),
-                    Center(child: SvgPicture.asset(Assets.svg.playSolid.path, width: 30)),
-                  ],
+            GestureDetector(
+              onTap: () {
+                getIt<PlayerBloc>().add(PlayerEvent.reset(PlayerModel(currentEpisode: episode)));
+                showDialog(context: context, builder: (context) => MusicPlayerScreen());
+              },
+              child: SizedBox(
+                height: 140,
+                width: 140,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: episode.pictureUrl,
+                        fit: BoxFit.cover,
+                        errorWidget: (c, o, s) => Container(color: Colors.grey),
+                      ),
+                      Container(color: Colors.black.addOpacity(100 * 0.2)),
+                      Center(child: SvgPicture.asset(Assets.svg.playSolid.path, width: 30)),
+                    ],
+                  ),
                 ),
               ),
             ),

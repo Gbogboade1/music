@@ -31,3 +31,16 @@ class EpisodeDetailsRoute extends GoRouteData with $EpisodeDetailsRoute {
     return PodcastEpisodeDetailsScreen(episodeId: episodeId, episode: $extra);
   }
 }
+
+@TypedGoRoute<MusicPlayerRoute>(path: MusicPlayerRoute.path, name: MusicPlayerRoute.name)
+class MusicPlayerRoute extends GoRouteData with $MusicPlayerRoute {
+  const MusicPlayerRoute();
+
+  static const String path = '/player';
+  static const String name = 'music-player';
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) {
+    return const MusicPlayerScreen();
+  }
+}

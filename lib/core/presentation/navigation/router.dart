@@ -9,6 +9,7 @@ import 'package:music/features/auth/presentation/ui/set_up_completed_screen.dart
 import 'package:music/features/auth/presentation/ui/signup_screen.dart';
 import 'package:music/features/auth/presentation/ui/splash_screen.dart';
 import 'package:music/features/auth/presentation/ui/verify_code_screen.dart';
+import 'package:music/features/dashboard/presentation/music_player_screen.dart';
 import 'package:music/features/dashboard/presentation/podcast_episode_details_screen.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/discover_bloc.dart';
 import 'package:music/features/dashboard/presentation/ui/dashboard_screen.dart';

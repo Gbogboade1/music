@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:music/__lib.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/categories_bloc.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/discover_bloc.dart';
+import 'package:music/features/dashboard/presentation/states/bloc/player_bloc.dart';
 import 'package:music/features/dashboard/presentation/states/bloc/your_library_bloc.dart';
 
 Future<void> setUp(AppEnvironment env) async {
@@ -25,7 +26,7 @@ Future<void> runMusicApp() async {
         BlocProvider.value(value: getIt<CategoriesBloc>()),
         BlocProvider.value(value: getIt<DiscoverBloc>()),
         BlocProvider.value(value: getIt<YourLibraryBloc>()),
-        BlocProvider.value(value: getIt<AppBloc>()),
+        BlocProvider.value(value: getIt<PlayerBloc>()),
       ],
       child: const MusicApp(),
     ),
