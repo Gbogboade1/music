@@ -1,5 +1,4 @@
 import '../../../../__lib.dart';
-import '../../../../core/presentation/themes/app_color_palette.dart';
 import '../states/bloc/player_bloc.dart';
 import '../states/entities/player_model.dart';
 import 'music_player_screen.dart';
